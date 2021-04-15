@@ -322,53 +322,58 @@ public class Main {
 		menuList.setLayout(null);
 		
 		JLabel lbl_sell = new JLabel("\uD310\uB9E4");
+		lbl_sell.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_sell.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				menuLayout.show(menuView, "sell");//클릭 시 sell패널 출력
 			}
 		});
-		lbl_sell.setBounds(99, 133, 57, 15);
+		lbl_sell.setBounds(0, 101, 264, 55);
 		menuList.add(lbl_sell);
 		
 		JLabel lbl_mtr = new JLabel("\uC7AC\uB8CC\uAD00\uB9AC");
+		lbl_mtr.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_mtr.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "mtr");//클릭 시 mtr패널 출력
 			}
 		});
-		lbl_mtr.setBounds(99, 180, 57, 15);
+		lbl_mtr.setBounds(0, 161, 264, 55);
 		menuList.add(lbl_mtr);
 		
 		JLabel lbl_rcp = new JLabel("\uB808\uC2DC\uD53C");
+		lbl_rcp.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_rcp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "rcp");//클릭 시 rcp패널 출력				
 			}
 		});
-		lbl_rcp.setBounds(99, 226, 57, 15);
+		lbl_rcp.setBounds(0, 291, 264, 55);
 		menuList.add(lbl_rcp);
 		
 		JLabel lbl_ord = new JLabel("\uBC1C\uC8FC");
+		lbl_ord.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_ord.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "ord");//클릭 시 ord패널 출력
 			}
 		});
-		lbl_ord.setBounds(99, 280, 57, 15);
+		lbl_ord.setBounds(0, 227, 264, 55);
 		menuList.add(lbl_ord);
 		
 		JLabel lbl_sls = new JLabel("\uB9E4\uCD9C");
+		lbl_sls.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_sls.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "sls");//클릭 시 sls패널 출력
 			}
 		});
-		lbl_sls.setBounds(99, 341, 57, 15);
+		lbl_sls.setBounds(0, 356, 264, 55);
 		menuList.add(lbl_sls);
 		
 	}
