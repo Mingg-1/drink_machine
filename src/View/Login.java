@@ -1,6 +1,8 @@
 package View;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -39,9 +41,20 @@ public class Login {
 	
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1029, 631);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		// 사용할 창 크기
+		int use_width = 1029;
+		int use_heigt = 631;
+		// 창 보기 좋게 띄우기 (위치계산) > 정확히 중앙에 띄우기
+		int get_width = Toolkit.getDefaultToolkit().getScreenSize().width / 2;
+		int get_heigt = Toolkit.getDefaultToolkit().getScreenSize().height / 2;
+		// 중앙에 뜨게 위치 계산
+		int width = get_width - use_width / 2;
+		int heigt = get_heigt - use_heigt / 2;
+		// 창 위치 설정
+		frame.setBounds(width, heigt, use_width, use_heigt);
+		frame.setBackground(new Color(230, 230, 230));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 1015, 594);
