@@ -33,23 +33,9 @@ import java.text.SimpleDateFormat;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import DAO.DeliveryDAO;
-//import DAO.MemberDAO;
 import VO.DeliveryVO;
-//import VO.MemberVO;
-//import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-//import java.text.SimpleDateFormat;
 import javax.swing.AbstractButton;
-//import javax.swing.JButton;
-//import javax.swing.JComboBox;
-//import javax.swing.JFrame;
-//import javax.swing.JLabel;
-//import javax.swing.JOptionPane;
-//import javax.swing.JPanel;
-//import javax.swing.JScrollPane;
-//import javax.swing.JTable;
-//import javax.swing.JTextField;
-//import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 //------------------------------------------------- 발주 끝
 
@@ -57,10 +43,7 @@ import javax.swing.table.DefaultTableModel;
 public class Main {
 
 	private JFrame frame;
-	private JTextField tf_id;
-	private JTextField tf_pw;
 	CardLayout cardLayout ; //카드레이아웃 선언
-	CardLayout loginLayout ; //카드레이아웃 선언
 	CardLayout menuLayout ; //카드레이아웃 선언
 
 	//발주 참조 선언------------------------------------------------
@@ -73,9 +56,6 @@ public class Main {
 	//----------------------------------------------------발주 끝
 	
 	
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -89,16 +69,13 @@ public class Main {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
+	
 	public Main() {
 		initialize();
+		frame.setVisible(true);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1029, 631);
@@ -106,53 +83,7 @@ public class Main {
 		
 		cardLayout = new CardLayout();
 		frame.getContentPane().setLayout(cardLayout);
-		
-		loginLayout = new CardLayout();
 		menuLayout = new CardLayout();
-		
-		//로그인 화면
-		JPanel login = new JPanel(loginLayout);
-		frame.getContentPane().add(login, "login");
-		login.setLayout(null);
-		
-		tf_id = new JTextField();
-		tf_id.setBounds(751, 222, 116, 21);
-		login.add(tf_id);
-		tf_id.setColumns(10);
-		
-		tf_pw = new JTextField();
-		tf_pw.setBounds(751, 278, 116, 21);
-		login.add(tf_pw);
-		tf_pw.setColumns(10);
-		
-		JLabel lbl_id = new JLabel("ID :");
-		lbl_id.setBounds(653, 225, 57, 15);
-		login.add(lbl_id);
-		
-		JLabel lbl_pw = new JLabel("PW :");
-		lbl_pw.setBounds(653, 281, 57, 15);
-		login.add(lbl_pw);
-		
-		JButton btn_login = new JButton("LOGIN");
-		btn_login.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				//로그인 버튼 클릭 시
-				String id = tf_id.getText();
-				String pw = tf_pw.getText();
-
-				if (id.equals("admin") && pw.equals("1234")) {//일치 시 로그인
-					JOptionPane.showMessageDialog(null, "로그인 성공!");
-					cardLayout.show(frame.getContentPane(), "menu_main"); //성공시 메뉴 화면 출력
-				}else {
-					JOptionPane.showMessageDialog(null, "로그인 실패", 
-							"로그인", JOptionPane.ERROR_MESSAGE);
-				}
-				
-			}
-		});
-		btn_login.setBounds(714, 343, 97, 23);
-		login.add(btn_login);
 		
 		//메뉴 화면
 		JPanel menu = new JPanel();
@@ -329,7 +260,7 @@ public class Main {
 				menuLayout.show(menuView, "sell");//클릭 시 sell패널 출력
 			}
 		});
-		lbl_sell.setBounds(0, 101, 264, 55);
+		lbl_sell.setBounds(0, 116, 264, 47);
 		menuList.add(lbl_sell);
 		
 		JLabel lbl_mtr = new JLabel("\uC7AC\uB8CC\uAD00\uB9AC");
@@ -340,40 +271,37 @@ public class Main {
 				menuLayout.show(menuView, "mtr");//클릭 시 mtr패널 출력
 			}
 		});
-		lbl_mtr.setBounds(0, 161, 264, 55);
+		lbl_mtr.setBounds(0, 173, 264, 47);
 		menuList.add(lbl_mtr);
 		
 		JLabel lbl_rcp = new JLabel("\uB808\uC2DC\uD53C");
-		lbl_rcp.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_rcp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "rcp");//클릭 시 rcp패널 출력				
 			}
 		});
-		lbl_rcp.setBounds(0, 291, 264, 55);
+		lbl_rcp.setBounds(0, 226, 264, 44);
 		menuList.add(lbl_rcp);
 		
 		JLabel lbl_ord = new JLabel("\uBC1C\uC8FC");
-		lbl_ord.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_ord.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "ord");//클릭 시 ord패널 출력
 			}
 		});
-		lbl_ord.setBounds(0, 227, 264, 55);
+		lbl_ord.setBounds(0, 280, 264, 51);
 		menuList.add(lbl_ord);
 		
 		JLabel lbl_sls = new JLabel("\uB9E4\uCD9C");
-		lbl_sls.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_sls.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "sls");//클릭 시 sls패널 출력
 			}
 		});
-		lbl_sls.setBounds(0, 356, 264, 55);
+		lbl_sls.setBounds(0, 341, 264, 47);
 		menuList.add(lbl_sls);
 		
 	}
