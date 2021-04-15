@@ -210,6 +210,17 @@ constraints DELIVERY_NUM_pk primary key (dvr_num),
 constraints FK_CODE2 foreign key(in_name)
 references INGREDIENT(in_name));
 
+update DELIVERY set dvr_num = rownum;
+
+create sequence Dvr_Num_seq
+increment by 1
+start with 1
+maxvalue 1000
+nocache;
+
+insert into DELIVERY (dvr_num, in_name, dvr_date, dvr_cnt, rcv_date)
+values (11,'¹Ð°¡·ç', sysdate, 5, sysdate+(interval '1' hour));
+
 select * from INGREDIENT;
 select * from BREAD;
 select * from SALES;
