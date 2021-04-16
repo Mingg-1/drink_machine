@@ -176,10 +176,6 @@ public class Main {
 		menuView.add(panel_sell, "sell");
 		panel_sell.setLayout(null);
 
-		JLabel label = new JLabel("\uD310\uB9E4");
-		label.setBounds(363, 5, 24, 15);
-		panel_sell.add(label);
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////재료 재고관리 화면////////////////////////////////////////////////////////////////////////////////////////////		
 
@@ -632,10 +628,6 @@ public class Main {
 		menuView.add(panel_sls, "sls");
 		panel_sls.setLayout(null);
 
-		JLabel lblNewLabel_2 = new JLabel("\uB9E4\uCD9C");
-		lblNewLabel_2.setBounds(304, 271, 57, 15);
-		panel_sls.add(lblNewLabel_2);
-
 		// 메뉴 목록 화면
 		JPanel menuList = new JPanel();
 		menuList.setBounds(0, 0, 264, 592);
@@ -643,6 +635,7 @@ public class Main {
 		menuList.setLayout(null);
 
 		JLabel lbl_sell = new JLabel("\uD310\uB9E4");
+		lbl_sell.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		lbl_sell.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_sell.addMouseListener(new MouseAdapter() {
 			@Override
@@ -650,10 +643,11 @@ public class Main {
 				menuLayout.show(menuView, "sell");// 클릭 시 sell패널 출력
 			}
 		});
-		lbl_sell.setBounds(0, 116, 264, 47);
+		lbl_sell.setBounds(0, 112, 264, 51);
 		menuList.add(lbl_sell);
 
 		JLabel lbl_mtr = new JLabel("\uC7AC\uB8CC\uAD00\uB9AC");
+		lbl_mtr.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		lbl_mtr.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_mtr.addMouseListener(new MouseAdapter() {
 			@Override
@@ -661,37 +655,43 @@ public class Main {
 				menuLayout.show(menuView, "mtr");// 클릭 시 mtr패널 출력
 			}
 		});
-		lbl_mtr.setBounds(0, 173, 264, 47);
+		lbl_mtr.setBounds(0, 171, 264, 51);
 		menuList.add(lbl_mtr);
 
 		JLabel lbl_rcp = new JLabel("\uB808\uC2DC\uD53C");
+		lbl_rcp.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
+		lbl_rcp.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_rcp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "rcp");// 클릭 시 rcp패널 출력
 			}
 		});
-		lbl_rcp.setBounds(0, 226, 264, 44);
+		lbl_rcp.setBounds(0, 232, 264, 51);
 		menuList.add(lbl_rcp);
 
 		JLabel lbl_ord = new JLabel("\uBC1C\uC8FC");
+		lbl_ord.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
+		lbl_ord.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_ord.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "ord");// 클릭 시 ord패널 출력
 			}
 		});
-		lbl_ord.setBounds(0, 280, 264, 51);
+		lbl_ord.setBounds(0, 293, 264, 51);
 		menuList.add(lbl_ord);
 
 		JLabel lbl_sls = new JLabel("\uB9E4\uCD9C");
+		lbl_sls.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
+		lbl_sls.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_sls.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "sls");// 클릭 시 sls패널 출력
 			}
 		});
-		lbl_sls.setBounds(0, 341, 264, 47);
+		lbl_sls.setBounds(0, 354, 264, 51);
 		menuList.add(lbl_sls);
 
 	}
