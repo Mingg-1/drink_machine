@@ -198,7 +198,7 @@ values ('우유', '모닝빵', 4);
 
 -----------------------------------------------------------------------
 
-/*발주 테이블(번호,재료이름,발주날짜,발주개수,수령날짜)*/
+/*발주 테이블(번호,재료코드,발주날짜,발주개수,수령날짜)*/
 CREATE TABLE DELIVERY(
 dvr_num NUMBER(10),
 in_name VARCHAR2(100),
@@ -210,7 +210,7 @@ constraints DELIVERY_NUM_pk primary key (dvr_num),
 constraints FK_CODE2 foreign key(in_name)
 references INGREDIENT(in_name));
 
-update DELIVERY set dvr_num = rownum;
+--update DELIVERY set dvr_num = rownum;
 
 create sequence Dvr_Num_seq
 increment by 1
@@ -219,7 +219,7 @@ maxvalue 1000
 nocache;
 
 insert into DELIVERY (dvr_num, in_name, dvr_date, dvr_cnt, rcv_date)
-values (11,'밀가루', sysdate, 5, sysdate+(interval '1' hour));
+values (Dvr_Num_seq.nextval,'밀가루', sysdate, 5, sysdate+DBMS_RANDOM.VALUE(30,180)/(24*60));
 
 select * from INGREDIENT;
 select * from BREAD;

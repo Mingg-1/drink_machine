@@ -1,10 +1,7 @@
 package View;
-
-import java.awt.Color;
 import java.awt.EventQueue;
 
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -42,13 +39,13 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.DefaultComboBoxModel;
+import java.awt.Rectangle;
 
 public class Order_in {
 
 	private JFrame frame;
-	private JTextField dvrnum;
+	private JComboBox<String> inname;
 	private JTextField dvrcnt;
-	private JTextField inname;
 	
 	DeliveryDAO daoo = new DeliveryDAO();
 	ArrayList<DeliveryVO> al = daoo.allSelect();
@@ -103,28 +100,15 @@ public class Order_in {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.getContentPane().setLayout(null);
-		// 사용할 창 크기
-		int use_width = 291;
-		int use_heigt = 439;
-		// 창 보기 좋게 띄우기 (위치계산) > 정확히 중앙에 띄우기
-		int get_width = Toolkit.getDefaultToolkit().getScreenSize().width / 2;
-		int get_heigt = Toolkit.getDefaultToolkit().getScreenSize().height / 2;
-		// 중앙에 뜨게 위치 계산
-		int width = get_width - use_width / 2;
-		int heigt = get_heigt - use_heigt / 2;
-		// 창 위치 설정
-		frame.setBounds(width, heigt, use_width, use_heigt);
-		frame.setBackground(new Color(230, 230, 230));
+		frame.setBounds(1500, 225, 291, 439);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("\uC7AC\uB8CC \uBC1C\uC8FC");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 20));
 		lblNewLabel.setBounds(67, 28, 142, 33);
 		frame.getContentPane().add(lblNewLabel);
-		
-		
 		
 		ButtonGroup gender = new ButtonGroup();
 		
@@ -134,9 +118,7 @@ public class Order_in {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				frame.dispose();
-				
-				
+				frame.dispose();			
 			}
 		});
 		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
@@ -149,7 +131,7 @@ public class Order_in {
 		for (int i = 0; i < al.size(); i++) {
 			for (int j = 0; j < 5; j++) {
 				if (j == 0) {
-					data1[i][j] = al.get(i).getDvr_num();
+//					data1[i][j] = al.get(i).getDvr_num();
 				} 
 				else if (j == 1) {
 					data1[i][j] = al.get(i).getIn_name();
@@ -171,92 +153,108 @@ public class Order_in {
 		btn_reset.setBounds(27, 348, 109, 23);
 		frame.getContentPane().add(btn_reset);
 		
-		JButton btn_join = new JButton("\uCD94\uAC00");
-		
-		btn_join.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				frame.dispose();
-				
-				String num = dvrnum.getText();
-				String name = inname.getText();	
-				String cnt = dvrcnt.getText();
-				
-				if(name != "" && cnt != "") {
-					
-					MemberDAO dao = new MemberDAO();
-					DeliveryDAO daoo = new DeliveryDAO();
-					DeliveryVO vo = new DeliveryVO(num, name, null, cnt, null);
-					
-					boolean result = daoo.InsertDelivery(vo);
-					
-					
-					if(result == true) {
-						JOptionPane.showMessageDialog(null, "주문 성공");
-						
-						new Main();
-						
-						frame.dispose();
-						
-						new Order_in();
-						
-						DefaultTableModel model = new DefaultTableModel(data1, colname);
-						JTable table = new JTable(model);
-						table.updateUI();
-					
-					}
-					else {
-						JOptionPane.showMessageDialog(null, "주문실패", "주문", JOptionPane.ERROR_MESSAGE);
-						
-						new Main();
-						frame.dispose();
-						
-						new Order_in();
-				
-					}
-					
-					
-				}
-				
-				
-			}
-		});
-		
-		btn_join.setBounds(148, 348, 109, 23);
-		frame.getContentPane().add(btn_join);
-		
 		ArrayList<MemberVO> a2 = new ArrayList<MemberVO>();
 		
 		//추가
 
 		JLabel lblNewLabel_1 = new JLabel("\uC7AC\uB8CC \uBAA9\uB85D");
-		lblNewLabel_1.setBounds(27, 175, 74, 25);
+		lblNewLabel_1.setBounds(27, 155, 74, 25);
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("\uC8FC\uBB38 \uC218\uB7C9");
 		lblNewLabel_2.setBounds(27, 230, 74, 25);
 		frame.getContentPane().add(lblNewLabel_2);
 		
-		dvrnum = new JTextField();
-		dvrnum.setBounds(129, 124, 116, 21);
-		frame.getContentPane().add(dvrnum);
-		dvrnum.setColumns(10);
-		
-		inname = new JTextField();
-		inname.setBounds(129, 177, 116, 21);
-		frame.getContentPane().add(inname);
-		inname.setColumns(10);
-		
 		//수량 입력
 		dvrcnt = new JTextField();
 		dvrcnt.setBounds(128, 230, 117, 25);
 		frame.getContentPane().add(dvrcnt);
 		dvrcnt.setColumns(10);
+		 
+		 JComboBox<String> inname= new JComboBox<String>();
 		
-		JLabel lblNewLabel_5 = new JLabel("New label");
-		lblNewLabel_5.setBounds(27, 127, 57, 15);
-		frame.getContentPane().add(lblNewLabel_5);
+		 inname.setBounds(128, 157, 116, 21);
+		 frame.getContentPane().add(inname);
+		
+		
+		 try {
+			 	connect();
+				String q = "select in_name from INGREDIENT";
+				pst = conn.prepareStatement(q);
+				rs = pst.executeQuery();
+				
+						
+				while(rs.next()) {
+					String in_name = rs.getString("in_name");
+					inname.addItem(in_name);
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close();
+			}
+		 JButton btn_join = new JButton("\uCD94\uAC00");
+			
+			btn_join.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					
+					frame.dispose();
+					
+//					String num = dvrnum.getText();
+					String name = inname.getSelectedItem().toString();
+					String cnt = dvrcnt.getText();
+					
+					if(name != "" && cnt != "") {
+						
+						MemberDAO dao = new MemberDAO();
+						DeliveryDAO daoo = new DeliveryDAO();
+						DeliveryVO vo = new DeliveryVO(null, name, null, cnt, null);
+						
+						boolean result = daoo.InsertDelivery(vo);
+						
+						
+						if(result == true) {
+							JOptionPane.showMessageDialog(null, "주문 성공");
+							
+//				            //추가버튼 클릭시, JTable에 행 데이터 추가
+//				            //->먼저 사용자가 입력한 4개의 정보를 가져오기
+//				            String num = deliveryVO.getDvr_num();
+//				            String name = txt_java.getText();
+//				            String  = txt_iot.getText();
+//				            String web = txt_web.getText();
+//				            
+//				            //4개의 정보를 콘솔창에 출력하시오
+//				            System.out.println(name+"/"+ java+"/"+ iot+"/"+ web);
+//				            String[] rowData = {name, java, iot, web};
+//				            model.addRow(rowData);
+							
+							new Main();
+							new Order_in();
+							frame.dispose();
+							
+							DefaultTableModel model = new DefaultTableModel(data1, colname);
+							JTable table = new JTable(model);
+							table.updateUI();
+						
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "주문실패", "주문", JOptionPane.ERROR_MESSAGE);	
+							new Main();
+							frame.dispose();	
+							new Order_in();	
+						}		
+					}	
+				}
+			});
+			btn_join.setBounds(148, 348, 109, 23);
+			frame.getContentPane().add(btn_join);
+		
+		
 	}
-
+	
+	
+	
 }

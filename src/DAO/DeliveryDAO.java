@@ -92,13 +92,13 @@ public class DeliveryDAO {
 		
 		boolean result = false;
 		connect();
-		String sql = "insert into Delivery values(?,?,sysdate,?,sysdate+1)";
+		String sql = "insert into Delivery values(Dvr_Num_seq.nextval,?,sysdate,?,sysdate+DBMS_RANDOM.VALUE(30,120)/(24*60))";
 		
 		try {
 			pst = conn.prepareStatement(sql);
-			pst.setString(1, vo.getDvr_num());
-			pst.setString(2, vo.getIn_name());
-			pst.setString(3, vo.getDvr_cnt());
+//			pst.setString(1, vo.getDvr_num());
+			pst.setString(1, vo.getIn_name());
+			pst.setString(2, vo.getDvr_cnt());
 			
 			int cnt = pst.executeUpdate();
 			
@@ -141,11 +141,7 @@ public class DeliveryDAO {
 		}		
 		return result;
 	}
-
-	public Vector getMemberList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 
 	}

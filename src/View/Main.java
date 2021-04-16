@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 
 import DAO.MemberDAO;
 import VO.MemberVO;
+import View.Order_in;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -139,105 +140,126 @@ public class Main {
 		
 		// 발주 화면---------------------------------------------------------------------------
 		
-		// 테이블
-		String[] colname = { "주문번호", "재료이름", "발주일자", "발주수량", "도착일자" };
 
-		String[][] data = new String[al.size()][5];
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		for (int i = 0; i < al.size(); i++) {
-			for (int j = 0; j < 5; j++) {
-				if (j == 0) {
-					data[i][j] = al.get(i).getDvr_num();
-				} 
-				else if (j == 1) {
-					data[i][j] = al.get(i).getIn_name();
-				}
-				else if (j == 2) {
-					if(al.get(i).getDvr_date()!=null) {
-						data[i][j] = format.format(al.get(i).getDvr_date());		
+		
+		
+				// 테이블
+				String[] colname = { "주문번호", "재료이름", "발주일자", "발주수량", "도착예정" };
+
+				String[][] data = new String[al.size()][5];
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				for (int i = 0; i < al.size(); i++) {
+					for (int j = 0; j < 5; j++) {
+						if (j == 0) {
+							data[i][j] = al.get(i).getDvr_num();
+						} 
+						else if (j == 1) {
+							data[i][j] = al.get(i).getIn_name();
+						}
+						else if (j == 2) {
+							if(al.get(i).getDvr_date()!=null) {
+								data[i][j] = format.format(al.get(i).getDvr_date());		
+							}
+						}
+						else if (j == 3) {
+							data[i][j] = al.get(i).getDvr_cnt();
+						}
+						else if (j == 4) {
+							if(al.get(i).getRcv_date()!=null) {
+								data[i][j] = format.format(al.get(i).getRcv_date());
+							}
+						}
 					}
 				}
-				else if (j == 3) {
-					data[i][j] = al.get(i).getDvr_cnt();
-				}
-				else if (j == 4) {
-					if(al.get(i).getRcv_date()!=null) {
-						data[i][j] = format.format(al.get(i).getRcv_date());
+				
+				//테이블패널
+				JPanel panel_ord = new JPanel();
+				menuView.add(panel_ord, "ord");
+				panel_ord.setLayout(null);
+				JPanel panel = new JPanel();
+				panel.setBounds(23, 10, 715, 450);
+				panel_ord.add(panel);
+				panel.setLayout(null);
+				
+				//테이블라벨
+				JLabel lblNewLabel_1 = new JLabel("\uBC1C\uC8FC \uAD00\uB9AC");
+				lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+				lblNewLabel_1.setFont(new Font("굴림", Font.PLAIN, 16));
+				lblNewLabel_1.setBounds(268, 10, 179, 43);
+				panel.add(lblNewLabel_1);
+				
+				//테이블스크롤패널
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setBounds(29, 99, 674, 347);
+				panel.add(scrollPane);
+				scrollPane.setViewportView(table);
+				
+				//테이블 클릭 
+				DefaultTableModel Model = new DefaultTableModel(data, colname);
+				JTable table = new JTable(Model);
+				table.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						int row = table.getSelectedRow();		
+						
+						selected_dvr_num = (String) table.getModel().getValueAt(row, 0);
+//						String selected_inname = (String) table.getModel().getValueAt(row, 1);
+//						String selected_dvrdate = (String) table.getModel().getValueAt(row, 2);
+//						String selected_dvrcnt = (String) table.getModel().getValueAt(row, 3);
+//						String selected_rcvdate = (String) table.getModel().getValueAt(row, 4);
+						
 					}
-				}
-			}
-		}
-		
-		//테이블패널
-		JPanel panel_ord = new JPanel();
-		menuView.add(panel_ord, "ord");
-		panel_ord.setLayout(null);
-		JPanel panel = new JPanel();
-		panel.setBounds(23, 10, 715, 450);
-		panel_ord.add(panel);
-		panel.setLayout(null);
-		
-		//테이블라벨
-		JLabel lblNewLabel_1 = new JLabel("\uBC1C\uC8FC \uAD00\uB9AC");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("굴림", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(268, 10, 179, 43);
-		panel.add(lblNewLabel_1);
-		
-		//테이블스크롤패널
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(29, 99, 674, 347);
-		panel.add(scrollPane);
-		scrollPane.setViewportView(table);
-		
-		//테이블 클릭  ********************************************살짝 오류있음 빈칸 누를시 오류뜨는거 차후 수정
-		JTable table = new JTable(data, colname);
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int row = table.getSelectedRow();		
-				selected_dvr_num = (String) table.getModel().getValueAt(row, 0);
-				String selected_inname = (String) table.getModel().getValueAt(row, 1);
-				String selected_dvrdate = (String) table.getModel().getValueAt(row, 2);
-				String selected_dvrcnt = (String) table.getModel().getValueAt(row, 3);
-				String selected_rcvdate = (String) table.getModel().getValueAt(row, 4);
-			}
-		});
+				});
+				
+				table.setFillsViewportHeight(true);
+				scrollPane.setViewportView(table);
 
-		table.setFillsViewportHeight(true);
-		scrollPane.setViewportView(table);
+				//아직 못만든 콤보박스
+				JComboBox comboBox = new JComboBox();
+				comboBox.setBounds(594, 68, 109, 21);
+				panel.add(comboBox);
+				
+				//주문페이지 추가생성 버튼
+				JButton btnNewButton = new JButton("\uC8FC\uBB38");
+				btnNewButton.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						new Order_in();
+					}
+				});
 
-		//아직 못만든 콤보박스
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(594, 68, 109, 21);
-		panel.add(comboBox);
-		
-		//주문페이지 추가생성 버튼
-		JButton btnNewButton = new JButton("\uC8FC\uBB38");
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				new Order_in();
-			}
-		});
+				//주문 삭제 버튼
+				btnNewButton.setFont(new Font("굴림", Font.PLAIN, 16));
+				btnNewButton.setBounds(185, 506, 122, 48);
+				panel_ord.add(btnNewButton);
+				JButton button = new JButton("\uC8FC\uBB38 \uC0AD\uC81C");
+				button.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent e) {
+						boolean result = daoo.deletedelivery(selected_dvr_num);
+						if (result == true) {
+							JOptionPane.showMessageDialog(null, "주문삭제 성공");
+							new Main();
+							frame.dispose();
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "주문삭제 실패");
+							new Main();
+							frame.dispose();
+						}
+					}
+				});
+				
+				
+				button.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+					}
+				});
 
-		//주문 삭제 버튼
-		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 16));
-		btnNewButton.setBounds(185, 506, 122, 48);
-		panel_ord.add(btnNewButton);
-		JButton button = new JButton("\uC8FC\uBB38 \uC0AD\uC81C");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean result = daoo.deletedelivery(selected_dvr_num);
-				if (result == true) {
-					JOptionPane.showMessageDialog(null, "주문삭제 성공");
-					new Main();
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "주문삭제 실패");
-				}
-			}
-		});
+				button.setFont(new Font("굴림", Font.PLAIN, 16));
+				button.setBounds(448, 506, 122, 48);
+				panel_ord.add(button);
 		
 		
 		button.addMouseListener(new MouseAdapter() {
