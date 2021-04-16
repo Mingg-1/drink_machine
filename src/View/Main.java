@@ -22,8 +22,10 @@ import javax.swing.SwingConstants;
 
 import DAO.MemberDAO;
 import DAO.RecipeDAO;
+import DAO.mtrDAO;
 import VO.MemberVO;
 import VO.RecipeVO;
+import VO.mtrVO;
 import View.Order_in;
 
 import java.awt.event.ActionEvent;
@@ -67,7 +69,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
 import DAO.RecipeDAO;
 import VO.RecipeVO;
 import VO.BreadVO;
@@ -87,6 +88,13 @@ public class Main {
 	private JFrame frame;
 	CardLayout cardLayout; // 카드레이아웃 선언
 	CardLayout menuLayout; // 카드레이아웃 선언
+
+	// 재고---------------------------------------------------------
+	private JTable mtr_table;
+	private int row; // 선택한 행의 위치
+	mtrDAO mdao = new mtrDAO();
+	ArrayList<mtrVO> ual = new ArrayList<mtrVO>();
+	// ------------------------------------------------------------
 
 	// 발주 참조 선언------------------------------------------------
 	private JTable table;
@@ -128,6 +136,7 @@ public class Main {
 	}
 
 	public Main() {
+		ual = mdao.useIn();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -171,15 +180,73 @@ public class Main {
 		label.setBounds(363, 5, 24, 15);
 		panel_sell.add(label);
 
-		// 재료관리 화면
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////재료 재고관리 화면////////////////////////////////////////////////////////////////////////////////////////////		
+
+// 테이블 출력
+// JTable 데이터 초기화
+// 컬럼명은 1차원 배열, 행 데이터는 2차원 배열로 구성
+		String[] colNames = { "재료명", "매장수량", "창고수량" };
+		String[][] rowDatas = new String[ual.size()][3];
+
+		for (int i = 0; i < ual.size(); i++) {// 회원 수 만큼 반복
+			for (int j = 0; j < 5; j++) {// 컬럼 수 만큼 반복
+// j값에 따라 vo값이 달라지게
+// 하나의 행당 하나의 회원정보가 들어있게
+				if (j == 0) {
+					rowDatas[i][j] = ual.get(i).getIn_name();
+				} else if (j == 1) {
+					rowDatas[i][j] = ual.get(i).getUse_in_cnt() + "";
+				} else if (j == 2) {
+					rowDatas[i][j] = ual.get(i).getWrh_in_cnt() + "";
+				}
+			}
+		}
+
+// 재료관리 화면
 		JPanel panel_mtr = new JPanel();
 		menuView.add(panel_mtr, "mtr");
 		panel_mtr.setLayout(null);
 
-		JLabel label_1 = new JLabel("\uC7AC\uB8CC\uAD00\uB9AC");
-		label_1.setBounds(333, 199, 57, 15);
-		panel_mtr.add(label_1);
+		JPanel panel_mtr1 = new JPanel();
+		panel_mtr1.setBounds(12, 10, 714, 388);
+		panel_mtr.add(panel_mtr1);
+		panel_mtr1.setLayout(null);
+//JPanel panel_mtr2 = new JPanel();
+//panel_mtr1.setBounds(17, 123, 461, 283);
+//frame.getContentPane().add(panel_mtr1);
 
+// 테이블 출력시 꼭 넣어줘야 함, 패널 아래에 넣어주기!
+		JScrollPane scroll_mtr = new JScrollPane();
+		scroll_mtr.setBounds(0, 0, 714, 428);
+		panel_mtr1.add(scroll_mtr);
+
+//// 테이블 생성, desing에서 jtable클릭해도 됨
+		JTable mtr_table = new JTable(rowDatas, colNames);
+		mtr_table.setFillsViewportHeight(true);// 전체를 테이블로 채울 때
+		mtr_table.setRowHeight(25);// 행높이
+//mtr_table.setShowVerticalLines(false);//세로 줄 안보이게
+//mtr_table.setShowHorizontalLines(false);//가로 줄 안보이게
+		scroll_mtr.setViewportView(mtr_table);
+
+		/*
+		 * TableCellRenderer renderer = new MyTableCellRenderer();
+		 * table.setDefaultRenderer(Class.forName("java.lang.Object"), renderer);
+		 * 
+		 * public class MyTableCellRenderer extends DefaultTableCellRenderer {
+		 * 
+		 * @Override public Component getTableCellRendererComponent(JTable table, Object
+		 * value, boolean, isSelected, boolean hasFocus, int row, int column) {
+		 * Component cell = super.getTableCellRendererComponent(table, value,
+		 * isSelected, hasFocus, row, column); if (!isSelected) { if (row % 2 == 0) {
+		 * cell.setBackground(Global.convert_Color(색깔코드)); } else {
+		 * cell.setBackground(Global.convert_Color(색깔코드)); } } return cell; } }
+		 */
+
+////////////////////////끝/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		
 		// 레시피 화면
 /////////////////////////////////////////////////////////////////////////////////
 ///////////레시피////////////////////////////////////////////////////////////////
