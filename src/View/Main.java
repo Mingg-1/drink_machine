@@ -2,6 +2,7 @@ package View;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -18,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
 import DAO.MemberDAO;
@@ -50,6 +52,7 @@ import VO.BreadVO;
 import VO.DeliveryVO;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractButton;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 //------------------------------------------------- 발주 끝
 
@@ -57,6 +60,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.CardLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -86,7 +90,6 @@ import javax.swing.JScrollBar;
 public class Main {
 
 	private JFrame frame;
-	CardLayout cardLayout; // 카드레이아웃 선언
 	CardLayout menuLayout; // 카드레이아웃 선언
 
 	// 재고---------------------------------------------------------
@@ -156,65 +159,138 @@ public class Main {
 		frame.setBounds(width, heigt, use_width, use_heigt);
 		frame.setBackground(new Color(230, 230, 230));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		cardLayout = new CardLayout();
-		frame.getContentPane().setLayout(cardLayout);
+		frame.getContentPane().setLayout(null);
 		menuLayout = new CardLayout();
 
-		// 메뉴 화면
-		JPanel menu = new JPanel();
-		frame.getContentPane().add(menu, "menu_main");
+//////////////		// 메뉴 화면////////////////////////////////////////////////////////////////////////
+
+		// 이미지 불러오기
+		ImageIcon mnbg = new ImageIcon("img/bg.png");
+		Image img1 = mnbg.getImage();
+		// 크기 조절한 이미지 불러오기
+		ImageIcon mnbg1 = new ImageIcon(img1);
+		// 패널을 생성하고 이미지 삽입
+		JPanel menu = new JPanel() {
+			protected void paintComponent(Graphics g) {
+				g.drawImage(mnbg1.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		// 부모 패널에 현재 이미지를 넣은 패널을 추가
+		menu.setBounds(0, 0, 1015, 594);
+		frame.getContentPane().add(menu);
 		menu.setLayout(null);
 
-		JPanel menuView = new JPanel();
+		// 이미지 불러오기
+		ImageIcon mvbg = new ImageIcon("img/menubg.png");
+		Image img2 = mvbg.getImage();
+		// 크기 조절한 이미지 불러오기
+		ImageIcon mvbg1 = new ImageIcon(img2);
+		// 패널을 생성하고 이미지 삽입
+		JPanel menuView = new JPanel() {
+			protected void paintComponent(Graphics g) {
+				g.drawImage(mvbg1.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		// 부모 패널에 현재 이미지를 넣은 패널을 추가
 		menuView.setBounds(263, 0, 750, 592);
 		menu.add(menuView);
 		menuView.setLayout(menuLayout);
 
-		// 판매 화면
-		JPanel panel_sell = new JPanel();
-		menuView.add(panel_sell, "sell");
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////판매 화면////////////////////////////////////////////////////////////////////////////////////////////	
+
+		// 이미지 불러오기
+		ImageIcon slbg = new ImageIcon("img/menubg.png");
+		Image img9 = slbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
+		// 크기 조절한 이미지 불러오기
+		ImageIcon slbg1 = new ImageIcon(img9); // ImageIcon 새변수명 = new ImageIcon(Image변수);
+		// 패널을 생성하고 이미지 산입
+		JPanel panel_sell = new JPanel() { // JPanel 패널이름 = new JPanel()
+			protected void paintComponent(Graphics g) {
+				g.drawImage(slbg1.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		// 부모 패널에 현재 이미지를 넣은 패널을 추가
+		menuView.add(panel_sell, "sell"); // 부모패널.add(현재패널이름, "이름");
 		panel_sell.setLayout(null);
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//		   // 이미지 불러오기
+//        ImageIcon bg = new ImageIcon("images/BG.png");
+//  	Image img4 = bg.getImage(); 
+		// Image 새변수명 = ImageIcon변수명.getImage();
+//        // 이미지 크기 조절
+//  	img4  = img4.getScaledInstance(165, 220, Image.SCALE_SMOOTH);
+//     
+//        // 크기 조절한 이미지 불러오기
+//        ImageIcon bgch = new ImageIcon(img4);
+		// ImageIcon 새변수명 = new ImageIcon(Image변수);
+//        // 패널을 생성하고 이미지 산입
+//        home_page = new JPanel() { //JPanel 패널이름 = new JPanel()
+//              protected void paintComponent(Graphics g) {
+//                 g.drawImage(bgch.getImage(), 0, 0, null); //g.drawImage(ImageIcon변수.getImage(), 0, 0, null);
+//                 setOpaque(false);
+//                 super.paintComponent(g);
+//          }
+//        };
+//        // 부모 패널에  현재 이미지를 넣은 패널을 추가
+//        panel.add(home_page, "home_page"); //부모패널.add(현재패널이름, "이름"); 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////재료 재고관리 화면////////////////////////////////////////////////////////////////////////////////////////////		
 
 // 테이블 출력
 // JTable 데이터 초기화
 // 컬럼명은 1차원 배열, 행 데이터는 2차원 배열로 구성
-		String[] colNames = { "재료명", "매장수량", "창고수량" };
-		String[][] rowDatas = new String[ual.size()][3];
+		String[] colNames = { "재료코드","재료명", "매장수량", "창고수량" };
+		String[][] rowDatas = new String[ual.size()][4];
 
-		for (int i = 0; i < ual.size(); i++) {// 회원 수 만큼 반복
+		for (int i = 0; i < ual.size(); i++) {
 			for (int j = 0; j < 5; j++) {// 컬럼 수 만큼 반복
 // j값에 따라 vo값이 달라지게
 // 하나의 행당 하나의 회원정보가 들어있게
 				if (j == 0) {
-					rowDatas[i][j] = ual.get(i).getIn_name();
+					rowDatas[i][j] = ual.get(i).getIn_code();
 				} else if (j == 1) {
-					rowDatas[i][j] = ual.get(i).getUse_in_cnt() + "";
+					rowDatas[i][j] = ual.get(i).getIn_name();
 				} else if (j == 2) {
+					rowDatas[i][j] = ual.get(i).getUse_in_cnt() + "";
+				}else if (j == 3) {
 					rowDatas[i][j] = ual.get(i).getWrh_in_cnt() + "";
 				}
 			}
 		}
 
-// 재료관리 화면
-		JPanel panel_mtr = new JPanel();
-		menuView.add(panel_mtr, "mtr");
+	// 이미지 불러오기
+		ImageIcon mtbg = new ImageIcon("img/menubg.png");
+		Image img3 = mtbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
+		// 크기 조절한 이미지 불러오기
+		ImageIcon mtbg1 = new ImageIcon(img3); // ImageIcon 새변수명 = new ImageIcon(Image변수);
+		// 패널을 생성하고 이미지 산입
+		JPanel panel_mtr = new JPanel() { // JPanel 패널이름 = new JPanel()
+			protected void paintComponent(Graphics g) {
+				g.drawImage(mtbg1.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		// 부모 패널에 현재 이미지를 넣은 패널을 추가
+		menuView.add(panel_mtr, "mtr"); // 부모패널.add(현재패널이름, "이름");
 		panel_mtr.setLayout(null);
 
 		JPanel panel_mtr1 = new JPanel();
-		panel_mtr1.setBounds(12, 10, 714, 388);
+		panel_mtr1.setBounds(12, 84, 726, 498);
 		panel_mtr.add(panel_mtr1);
 		panel_mtr1.setLayout(null);
-//JPanel panel_mtr2 = new JPanel();
-//panel_mtr1.setBounds(17, 123, 461, 283);
-//frame.getContentPane().add(panel_mtr1);
 
 // 테이블 출력시 꼭 넣어줘야 함, 패널 아래에 넣어주기!
 		JScrollPane scroll_mtr = new JScrollPane();
-		scroll_mtr.setBounds(0, 0, 714, 428);
+		scroll_mtr.setBounds(0, 0, 726, 498);
 		panel_mtr1.add(scroll_mtr);
 
 //// 테이블 생성, desing에서 jtable클릭해도 됨
@@ -242,23 +318,49 @@ public class Main {
 ////////////////////////끝/////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		
 		// 레시피 화면
 /////////////////////////////////////////////////////////////////////////////////
 ///////////레시피////////////////////////////////////////////////////////////////
 
 //레시피 화면
-		JPanel panel_rcp = new JPanel();
-		menuView.add(panel_rcp, "rcp");
+
+		// 이미지 불러오기
+		ImageIcon rcbg = new ImageIcon("img/menubg.png");
+		Image img4 = rcbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
+		// 크기 조절한 이미지 불러오기
+		ImageIcon rcbg1 = new ImageIcon(img4); // ImageIcon 새변수명 = new ImageIcon(Image변수);
+		// 패널을 생성하고 이미지 산입
+		JPanel panel_rcp = new JPanel() { // JPanel 패널이름 = new JPanel()
+			protected void paintComponent(Graphics g) {
+				g.drawImage(rcbg1.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		// 부모 패널에 현재 이미지를 넣은 패널을 추가
+		menuView.add(panel_rcp, "rcp"); // 부모패널.add(현재패널이름, "이름");
 		panel_rcp.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("\uB808\uC2DC\uD53C"); // 레시피 상단 글자
 		lblNewLabel.setBounds(12, 10, 57, 15);
 		panel_rcp.add(lblNewLabel);
 
-		JPanel panel_1 = new JPanel(); // 버튼이 들어갈 패널
-		panel_1.setBounds(0, 35, 738, 545);
-		panel_rcp.add(panel_1);
+		// 이미지 불러오기
+		ImageIcon rcpbg = new ImageIcon("img/menubg.png");
+		Image img5 = rcpbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
+		// 크기 조절한 이미지 불러오기
+		ImageIcon rcpbg1 = new ImageIcon(img5); // ImageIcon 새변수명 = new ImageIcon(Image변수);
+		// 패널을 생성하고 이미지 산입
+		JPanel panel_1 = new JPanel() { // JPanel 패널이름 = new JPanel()
+			protected void paintComponent(Graphics g) {
+				g.drawImage(rcpbg1.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		// 부모 패널에 현재 이미지를 넣은 패널을 추가
+		panel_1.setBounds(0, 35, 750, 557);
+		panel_rcp.add(panel_1); // 부모패널.add(현재패널이름, "이름");
 		panel_1.setLayout(null);
 
 		JLabel registration_Rcp = new JLabel("\uC0C1\uD488\uB4F1\uB85D");
@@ -495,12 +597,40 @@ public class Main {
 		}
 
 //테이블패널
-		JPanel panel_ord = new JPanel();
-		menuView.add(panel_ord, "ord");
+
+		// 이미지 불러오기
+		ImageIcon orbg = new ImageIcon("img/menubg.png");
+		Image img6 = orbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
+		// 크기 조절한 이미지 불러오기
+		ImageIcon orbg1 = new ImageIcon(img6); // ImageIcon 새변수명 = new ImageIcon(Image변수);
+		// 패널을 생성하고 이미지 산입
+		JPanel panel_ord = new JPanel() { // JPanel 패널이름 = new JPanel()
+			protected void paintComponent(Graphics g) {
+				g.drawImage(orbg1.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		// 부모 패널에 현재 이미지를 넣은 패널을 추가
+		menuView.add(panel_ord, "ord"); // 부모패널.add(현재패널이름, "이름");
 		panel_ord.setLayout(null);
-		JPanel panel = new JPanel();
+
+		// 이미지 불러오기
+		ImageIcon ordbg = new ImageIcon("img/menubg.png");
+		Image img7 = ordbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
+		// 크기 조절한 이미지 불러오기
+		ImageIcon ordbg1 = new ImageIcon(img7); // ImageIcon 새변수명 = new ImageIcon(Image변수);
+		// 패널을 생성하고 이미지 산입
+		JPanel panel = new JPanel() { // JPanel 패널이름 = new JPanel()
+			protected void paintComponent(Graphics g) {
+				g.drawImage(ordbg1.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		// 부모 패널에 현재 이미지를 넣은 패널을 추가
 		panel.setBounds(23, 10, 715, 450);
-		panel_ord.add(panel);
+		panel_ord.add(panel); // 부모패널.add(현재패널이름, "이름");
 		panel.setLayout(null);
 
 //테이블라벨
@@ -623,18 +753,47 @@ public class Main {
 		button.setBounds(448, 506, 122, 48);
 		panel_ord.add(button);
 
-		// 매출화면
-		JPanel panel_sls = new JPanel();
-		menuView.add(panel_sls, "sls");
+////////////////////		// 매출화면////////////////////////////////////////////////////////////////////////////////////////
+
+		// 이미지 불러오기
+		ImageIcon slsbg = new ImageIcon("img/menubg.png");
+		Image img8 = slsbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
+		// 크기 조절한 이미지 불러오기
+		ImageIcon slsbg1 = new ImageIcon(img8); // ImageIcon 새변수명 = new ImageIcon(Image변수);
+		// 패널을 생성하고 이미지 산입
+		JPanel panel_sls = new JPanel() { // JPanel 패널이름 = new JPanel()
+			protected void paintComponent(Graphics g) {
+				g.drawImage(slsbg1.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		// 부모 패널에 현재 이미지를 넣은 패널을 추가
+		menuView.add(panel_sls, "sls"); // 부모패널.add(현재패널이름, "이름");
 		panel_sls.setLayout(null);
 
-		// 메뉴 목록 화면
-		JPanel menuList = new JPanel();
+//////////////////////		// 메뉴 목록 화면/////////////////////////////////////////////////////////////////////////////////////////
+
+		// 이미지 불러오기
+		ImageIcon mlbg = new ImageIcon("img/menulist.png");
+		Image img10 = mlbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
+		// 크기 조절한 이미지 불러오기
+		ImageIcon mlbg1 = new ImageIcon(img10); // ImageIcon 새변수명 = new ImageIcon(Image변수);
+		// 패널을 생성하고 이미지 산입
+		JPanel menuList = new JPanel() { // JPanel 패널이름 = new JPanel()
+			protected void paintComponent(Graphics g) {
+				g.drawImage(mlbg1.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		// 부모 패널에 현재 이미지를 넣은 패널을 추가
 		menuList.setBounds(0, 0, 264, 592);
-		menu.add(menuList);
+		menu.add(menuList); // 부모패널.add(현재패널이름, "이름");
 		menuList.setLayout(null);
 
 		JLabel lbl_sell = new JLabel("\uD310\uB9E4");
+		lbl_sell.setForeground(Color.WHITE);
 		lbl_sell.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		lbl_sell.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_sell.addMouseListener(new MouseAdapter() {
@@ -643,10 +802,11 @@ public class Main {
 				menuLayout.show(menuView, "sell");// 클릭 시 sell패널 출력
 			}
 		});
-		lbl_sell.setBounds(0, 112, 264, 51);
+		lbl_sell.setBounds(0, 206, 264, 51);
 		menuList.add(lbl_sell);
 
 		JLabel lbl_mtr = new JLabel("\uC7AC\uB8CC\uAD00\uB9AC");
+		lbl_mtr.setForeground(Color.WHITE);
 		lbl_mtr.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		lbl_mtr.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_mtr.addMouseListener(new MouseAdapter() {
@@ -655,10 +815,11 @@ public class Main {
 				menuLayout.show(menuView, "mtr");// 클릭 시 mtr패널 출력
 			}
 		});
-		lbl_mtr.setBounds(0, 171, 264, 51);
+		lbl_mtr.setBounds(0, 265, 264, 51);
 		menuList.add(lbl_mtr);
 
 		JLabel lbl_rcp = new JLabel("\uB808\uC2DC\uD53C");
+		lbl_rcp.setForeground(Color.WHITE);
 		lbl_rcp.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		lbl_rcp.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_rcp.addMouseListener(new MouseAdapter() {
@@ -667,10 +828,11 @@ public class Main {
 				menuLayout.show(menuView, "rcp");// 클릭 시 rcp패널 출력
 			}
 		});
-		lbl_rcp.setBounds(0, 232, 264, 51);
+		lbl_rcp.setBounds(0, 326, 264, 51);
 		menuList.add(lbl_rcp);
 
 		JLabel lbl_ord = new JLabel("\uBC1C\uC8FC");
+		lbl_ord.setForeground(Color.WHITE);
 		lbl_ord.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		lbl_ord.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_ord.addMouseListener(new MouseAdapter() {
@@ -679,10 +841,11 @@ public class Main {
 				menuLayout.show(menuView, "ord");// 클릭 시 ord패널 출력
 			}
 		});
-		lbl_ord.setBounds(0, 293, 264, 51);
+		lbl_ord.setBounds(0, 387, 264, 51);
 		menuList.add(lbl_ord);
 
 		JLabel lbl_sls = new JLabel("\uB9E4\uCD9C");
+		lbl_sls.setForeground(Color.WHITE);
 		lbl_sls.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		lbl_sls.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_sls.addMouseListener(new MouseAdapter() {
@@ -691,7 +854,7 @@ public class Main {
 				menuLayout.show(menuView, "sls");// 클릭 시 sls패널 출력
 			}
 		});
-		lbl_sls.setBounds(0, 354, 264, 51);
+		lbl_sls.setBounds(0, 448, 264, 51);
 		menuList.add(lbl_sls);
 
 	}
