@@ -104,14 +104,14 @@ public class RecipeDAO {
 			boolean result = false;
 			connect();
 			
-			String sql = "insert into BREAD values (?,?,10,?)";
+			String sql = "insert into BREAD values (?,?,?)";
 			
 					try {
 						pst = conn.prepareStatement(sql);
 						pst.setString(1, vo.getBrd_code());
 						pst.setString(2, vo.getBrd_name()); //String brd_code, brd_name brd_cnt,  brd_prc
 						
-						pst.setInt(4, vo.getBrd_prc());
+						pst.setInt(3, vo.getBrd_prc());
 //						pst.setString(4, vo.getIn_name());
 //						pst.setInt(5, vo.getRcp_cnt());
 						int cnt = pst.executeUpdate();
