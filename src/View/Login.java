@@ -101,7 +101,7 @@ public class Login {
 		panel.add(tf_id);
 		tf_id.setColumns(10);
 
-		tf_pw = new JTextField();
+		tf_pw = new JPasswordField();
 		sl_background.putConstraint(SpringLayout.NORTH, tf_pw, 274, SpringLayout.NORTH, panel);
 		sl_background.putConstraint(SpringLayout.WEST, tf_pw, 814, SpringLayout.WEST, panel);
 		sl_background.putConstraint(SpringLayout.EAST, tf_pw, -70, SpringLayout.EAST, panel);
