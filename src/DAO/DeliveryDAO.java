@@ -2,6 +2,7 @@ package DAO;
 
 
 import java.util.Date;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -117,33 +118,62 @@ public class DeliveryDAO {
 	}
 	
 	
-	public boolean deletedelivery(String id) {
+	public boolean deletedelivery(String id, long minute) {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		connect();
 		String sql = "delete from Delivery where dvr_num=?";
-		try {
-			pst = conn.prepareStatement(sql);
-			pst.setString(1, id);
+		
+		if(minute < -10) {
+			try {
+				pst = conn.prepareStatement(sql);
+				pst.setString(1, id);
 
-			int cnt = pst.executeUpdate();
-			
-			if(cnt>0) {
-				result = true;
-			}else {
-				result = false;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			close();
-		}		
+				int cnt = pst.executeUpdate();
+				
+				if(cnt>0 ) {
+					result = true;
+				}else {
+					result = false;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close();
+			}		
+		}else {
+			result = false;
+		}
+		
 		return result;
 	}
 	
 	
-
-	}
+	
+//	 public ArrayList<DeliveryVO> allMemberReload() {
+//		
+//		DeliveryDAO daoo = new DeliveryDAO();
+//		ArrayList<DeliveryVO> al = daoo.allSelect();     
+//        .setRowCount(0);
+//        
+//        String[][] allMemberInfo = new String[memberList.size()][4];
+//        
+//        for (int i = 0; i < memberList.size(); i++) {
+//           allMemberInfo[i][0] = memberList.get(i).getId();
+//           allMemberInfo[i][1] = memberList.get(i).getName();
+//           allMemberInfo[i][2] = memberList.get(i).getAge();
+//           allMemberInfo[i][3] = memberList.get(i).getState();
+//           allMemberInfo[i][4] = memberList.get(i).getState();
+//           
+//           admin_memberModel.addRow(new Object[] {allMemberInfo[i][0], allMemberInfo[i][1], allMemberInfo[i][2], allMemberInfo[i][3]});
+//           
+//     }
+//
+//	
+//
+//	}
+	 
+}
 	
 	
