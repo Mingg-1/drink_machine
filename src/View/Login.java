@@ -65,7 +65,7 @@ public class Login {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// 프레임참 배경이미지 적용
-		ImageIcon bg = new ImageIcon("img/log.png");
+		ImageIcon bg = new ImageIcon("img/logbg.png");
 
 		JPanel panel = new JPanel() {
 			@Override
