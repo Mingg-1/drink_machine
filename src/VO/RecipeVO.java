@@ -1,25 +1,28 @@
 package VO;
 
 public class RecipeVO {
-   private String inName;
-   private String brdName;
-   private String rcpCnt;
-   public RecipeVO(String in_name, String brd_name, String rcpCnt) {
-      super();
-      this.inName = in_name;
-      this.brdName = brd_name;
-      this.rcpCnt = rcpCnt;
-   }
-   public String getInName() {
-      return inName;
-   }
-   public String getBrdName() {
-      return brdName;
-   }
-   public String getRcpCnt() {
-      return rcpCnt;
-   }
-   
-   
-   
+	private String in_name;
+	private String brd_name;
+	
+	private int rcp_cnt;
+	
+	public RecipeVO(String in_name,String brd_name, int rcp_cnt) {
+		super();
+		this.in_name = in_name;
+		
+		this.brd_name = brd_name;
+		this.rcp_cnt = rcp_cnt;
+		
+	}
+	
+	public String getIn_name() {
+		return in_name;
+	}
+	public String getBrd_name() {
+		return brd_name;
+	}
+	public int getRcp_cnt() {
+		return rcp_cnt;
+	}
+
 }
