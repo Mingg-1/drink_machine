@@ -9,7 +9,7 @@ public class BreadVO {
 	private int brd_prc;
 	
 	
-	public BreadVO(String brd_code, String brd_name, int brd_cnt,int brd_prc) {
+	public BreadVO(String brd_code, String brd_name, int brd_cnt, int brd_prc) {
 		super();
 		this.brd_code = brd_code;
 		this.brd_name = brd_name;
@@ -27,7 +27,6 @@ public class BreadVO {
 	public int getBrd_cnt() {
 		return brd_cnt;
 	}
-	
 	public int getBrd_prc() {
 		return brd_prc;
 	}

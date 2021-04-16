@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import VO.RecipeVO;
 import VO.BreadVO;
-import VO.BreadVO; 
+ 
 
 
 
@@ -76,11 +76,11 @@ public class RecipeDAO {
 					
 					String brd_code = rs.getString(1);
 					String brd_name = rs.getString(2);
-					
-					int brd_prc = rs.getInt(3);
+//					int brd_cnt = rs.getInt(3);
+					int brd_prc = rs.getInt(4);
 					
 	
-					BreadVO vo = new BreadVO(brd_code, brd_name, brd_prc);
+					BreadVO vo = new BreadVO(brd_code, brd_name, brd_cnt, brd_prc);
 					
 					al_brd.add(vo);
 				
@@ -104,14 +104,15 @@ public class RecipeDAO {
 			boolean result = false;
 			connect();
 			
-			String sql = "insert into BREAD values (?,?,?)";
+			String sql = "insert into BREAD values (?,?,null,?)";
 			
 					try {
 						pst = conn.prepareStatement(sql);
-						pst.setString(1, vo.getBrd_code());
-						pst.setString(2, vo.getBrd_name()); //String brd_code, brd_name brd_cnt,  brd_prc
 						
+						pst.setString(1, vo.getBrd_code());
+						pst.setString(2, vo.getBrd_name()); //String brd_code, brd_name brd_cnt,  brd_pr	
 						pst.setInt(3, vo.getBrd_prc());
+						
 //						pst.setString(4, vo.getIn_name());
 //						pst.setInt(5, vo.getRcp_cnt());
 						int cnt = pst.executeUpdate();
@@ -130,12 +131,6 @@ public class RecipeDAO {
 					return result;
 				}
 				
-			
-			
-	
-	
-	
-	
 	
 	//레시피 삭제 중복이 없다는 가정하에
 		public boolean delete(String brdName) {
