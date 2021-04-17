@@ -133,7 +133,7 @@ public class Login {
 
 				if (id.equals("admin") && pw.equals("1234")) {// 일치 시 로그인
 					JOptionPane.showMessageDialog(null, "로그인 성공!");
-					new Main(); // 성공시 메뉴 화면 출력
+					new SellMain(); // 성공시 메뉴 화면 출력
 					frame.dispose(); // 현재 Window창 종료
 				} else {
 					JOptionPane.showMessageDialog(null, "로그인 실패", "로그인", JOptionPane.ERROR_MESSAGE);

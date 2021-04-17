@@ -231,7 +231,7 @@ public class Order_in {
 //				            String[] rowData = {name, java, iot, web};
 //				            model.addRow(rowData);
 							
-							new Main();
+							new DeliveryMain();
 							new Order_in();
 							frame.dispose();
 							
@@ -242,7 +242,6 @@ public class Order_in {
 						}
 						else {
 							JOptionPane.showMessageDialog(null, "주문실패", "주문", JOptionPane.ERROR_MESSAGE);	
-							new Main();
 							frame.dispose();	
 							new Order_in();	
 						}		

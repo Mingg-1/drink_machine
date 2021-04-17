@@ -87,26 +87,11 @@ import javax.swing.JTable;
 import javax.swing.JScrollBar;
 //-------------------------------------------------레시피 끝
 
-public class Main {
+public class RecipeMain {
 
 	private JFrame frame;
 	CardLayout menuLayout; // 카드레이아웃 선언
 
-	// 재고---------------------------------------------------------
-	private JTable mtr_table;
-	private int row; // 선택한 행의 위치
-	mtrDAO mdao = new mtrDAO();
-	ArrayList<mtrVO> ual = new ArrayList<mtrVO>();
-	// ------------------------------------------------------------
-
-	// 발주 참조 선언------------------------------------------------
-	private JTable table;
-	MemberDAO dao = new MemberDAO();
-	DeliveryDAO daoo = new DeliveryDAO();
-//	ArrayList<DeliveryVO> al = new ArrayList<DeliveryVO>();
-	ArrayList<DeliveryVO> al = daoo.allSelect();
-	String selected_dvr_num = "";
-	String selected_rcvdate = "";
 	// ----------------------------------------------------발주 끝
 
 	// 레시피 참조 선언 -----------------------------------------------
@@ -182,7 +167,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Main window = new Main();
+					RecipeMain window = new RecipeMain();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -191,8 +176,7 @@ public class Main {
 		});
 	}
 
-	public Main() {
-		ual = mdao.useIn();
+	public RecipeMain() {
 		initialize();
 		frame.setVisible(true);
 	}
@@ -253,26 +237,6 @@ public class Main {
 		menu.add(menuView);
 		menuView.setLayout(menuLayout);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////판매 화면////////////////////////////////////////////////////////////////////////////////////////////	
-
-		// 이미지 불러오기
-		ImageIcon slbg = new ImageIcon("img/menubg.png");
-		Image img9 = slbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
-		// 크기 조절한 이미지 불러오기
-		ImageIcon slbg1 = new ImageIcon(img9); // ImageIcon 새변수명 = new ImageIcon(Image변수);
-		// 패널을 생성하고 이미지 산입
-		JPanel panel_sell = new JPanel() { // JPanel 패널이름 = new JPanel()
-			protected void paintComponent(Graphics g) {
-				g.drawImage(slbg1.getImage(), 0, 0, null);
-				setOpaque(false);
-				super.paintComponent(g);
-			}
-		};
-		// 부모 패널에 현재 이미지를 넣은 패널을 추가
-		menuView.add(panel_sell, "sell"); // 부모패널.add(현재패널이름, "이름");
-		panel_sell.setLayout(null);
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //		   // 이미지 불러오기
 //        ImageIcon bg = new ImageIcon("images/BG.png");
@@ -295,81 +259,6 @@ public class Main {
 //        // 부모 패널에  현재 이미지를 넣은 패널을 추가
 //        panel.add(home_page, "home_page"); //부모패널.add(현재패널이름, "이름"); 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////재료 재고관리 화면////////////////////////////////////////////////////////////////////////////////////////////		
-
-// 테이블 출력
-// JTable 데이터 초기화
-// 컬럼명은 1차원 배열, 행 데이터는 2차원 배열로 구성
-		String[] colNames = { "재료코드", "재료명", "매장수량", "창고수량" };
-		String[][] rowDatas = new String[ual.size()][4];
-
-		for (int i = 0; i < ual.size(); i++) {
-			for (int j = 0; j < 5; j++) {// 컬럼 수 만큼 반복
-// j값에 따라 vo값이 달라지게
-// 하나의 행당 하나의 회원정보가 들어있게
-				if (j == 0) {
-					rowDatas[i][j] = ual.get(i).getIn_code();
-				} else if (j == 1) {
-					rowDatas[i][j] = ual.get(i).getIn_name();
-				} else if (j == 2) {
-					rowDatas[i][j] = ual.get(i).getUse_in_cnt() + "";
-				} else if (j == 3) {
-					rowDatas[i][j] = ual.get(i).getWrh_in_cnt() + "";
-				}
-			}
-		}
-
-		// 이미지 불러오기
-		ImageIcon mtbg = new ImageIcon("img/menubg.png");
-		Image img3 = mtbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
-		// 크기 조절한 이미지 불러오기
-		ImageIcon mtbg1 = new ImageIcon(img3); // ImageIcon 새변수명 = new ImageIcon(Image변수);
-		// 패널을 생성하고 이미지 산입
-		JPanel panel_mtr = new JPanel() { // JPanel 패널이름 = new JPanel()
-			protected void paintComponent(Graphics g) {
-				g.drawImage(mtbg1.getImage(), 0, 0, null);
-				setOpaque(false);
-				super.paintComponent(g);
-			}
-		};
-		// 부모 패널에 현재 이미지를 넣은 패널을 추가
-		menuView.add(panel_mtr, "mtr"); // 부모패널.add(현재패널이름, "이름");
-		panel_mtr.setLayout(null);
-
-		JPanel panel_mtr1 = new JPanel();
-		panel_mtr1.setBounds(12, 84, 726, 498);
-		panel_mtr.add(panel_mtr1);
-		panel_mtr1.setLayout(null);
-
-// 테이블 출력시 꼭 넣어줘야 함, 패널 아래에 넣어주기!
-		JScrollPane scroll_mtr = new JScrollPane();
-		scroll_mtr.setBounds(0, 0, 726, 498);
-		panel_mtr1.add(scroll_mtr);
-
-//// 테이블 생성, desing에서 jtable클릭해도 됨
-		JTable mtr_table = new JTable(rowDatas, colNames);
-		mtr_table.setFillsViewportHeight(true);// 전체를 테이블로 채울 때
-		mtr_table.setRowHeight(25);// 행높이
-//mtr_table.setShowVerticalLines(false);//세로 줄 안보이게
-//mtr_table.setShowHorizontalLines(false);//가로 줄 안보이게
-		scroll_mtr.setViewportView(mtr_table);
-
-		/*
-		 * TableCellRenderer renderer = new MyTableCellRenderer();
-		 * table.setDefaultRenderer(Class.forName("java.lang.Object"), renderer);
-		 * 
-		 * public class MyTableCellRenderer extends DefaultTableCellRenderer {
-		 * 
-		 * @Override public Component getTableCellRendererComponent(JTable table, Object
-		 * value, boolean, isSelected, boolean hasFocus, int row, int column) {
-		 * Component cell = super.getTableCellRendererComponent(table, value,
-		 * isSelected, hasFocus, row, column); if (!isSelected) { if (row % 2 == 0) {
-		 * cell.setBackground(Global.convert_Color(색깔코드)); } else {
-		 * cell.setBackground(Global.convert_Color(색깔코드)); } } return cell; } }
-		 */
-
-////////////////////////끝/////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		// 레시피 화면
 /////////////////////////////////////////////////////////////////////////////////
@@ -455,7 +344,7 @@ public class Main {
 					if (result == true) {
 //null : 메시지창이 어떤 프레임에서 보여지기 될지 보통 null 사용
 						JOptionPane.showMessageDialog(null, "레시피 등록 성공");
-						new Main();// 레시피 창 띄우기
+						new RecipeMain();// 레시피 창 띄우기
 //frame.dispose();
 					} else {
 						JOptionPane.showMessageDialog(null, "레시피 등록 실패", "레시피 등록", JOptionPane.ERROR_MESSAGE);
@@ -495,7 +384,7 @@ public class Main {
 
 					if (result == true) {
 						JOptionPane.showMessageDialog(null, "레시피삭제 성공");
-						new Main();
+						new RecipeMain();
 
 					} else {
 						JOptionPane.showMessageDialog(null, "레시피삭제 실패", "레시피삭제", JOptionPane.ERROR_MESSAGE);
@@ -576,7 +465,7 @@ public class Main {
 					if (result == true) {
 //null : 메시지창이 어떤 프레임에서 보여지기 될지 보통 null 사용
 						JOptionPane.showMessageDialog(null, "레시피 등록 성공");
-						new Main();// 레시피 창 띄우기
+						new RecipeMain();// 레시피 창 띄우기
 //frame.dispose();
 					} else {
 						JOptionPane.showMessageDialog(null, "레시피 등록 실패", "레시피 등록", JOptionPane.ERROR_MESSAGE);
@@ -622,209 +511,6 @@ public class Main {
 		table_1.setFillsViewportHeight(true);
 		scrollPane_1.setViewportView(table_1);
 
-// 발주 화면---------------------------------------------------------------------------
-
-// 테이블
-		String[] colname = { "주문번호", "재료이름", "발주일자", "발주수량", "도착예정" };
-
-		String[][] data = new String[al.size()][5];
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		for (int i = 0; i < al.size(); i++) {
-			for (int j = 0; j < 5; j++) {
-				if (j == 0) {
-					data[i][j] = al.get(i).getDvr_num();
-				} else if (j == 1) {
-					data[i][j] = al.get(i).getIn_name();
-				} else if (j == 2) {
-					if (al.get(i).getDvr_date() != null) {
-						data[i][j] = format.format(al.get(i).getDvr_date());
-					}
-				} else if (j == 3) {
-					data[i][j] = al.get(i).getDvr_cnt();
-				} else if (j == 4) {
-					if (al.get(i).getRcv_date() != null) {
-						data[i][j] = format.format(al.get(i).getRcv_date());
-					}
-				}
-			}
-		}
-
-//테이블패널
-
-		// 이미지 불러오기
-		ImageIcon orbg = new ImageIcon("img/menubg.png");
-		Image img6 = orbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
-		// 크기 조절한 이미지 불러오기
-		ImageIcon orbg1 = new ImageIcon(img6); // ImageIcon 새변수명 = new ImageIcon(Image변수);
-		// 패널을 생성하고 이미지 산입
-		JPanel panel_ord = new JPanel() { // JPanel 패널이름 = new JPanel()
-			protected void paintComponent(Graphics g) {
-				g.drawImage(orbg1.getImage(), 0, 0, null);
-				setOpaque(false);
-				super.paintComponent(g);
-			}
-		};
-		// 부모 패널에 현재 이미지를 넣은 패널을 추가
-		menuView.add(panel_ord, "ord"); // 부모패널.add(현재패널이름, "이름");
-		panel_ord.setLayout(null);
-
-		// 이미지 불러오기
-		ImageIcon ordbg = new ImageIcon("img/menubg.png");
-		Image img7 = ordbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
-		// 크기 조절한 이미지 불러오기
-		ImageIcon ordbg1 = new ImageIcon(img7); // ImageIcon 새변수명 = new ImageIcon(Image변수);
-		// 패널을 생성하고 이미지 산입
-		JPanel panel = new JPanel() { // JPanel 패널이름 = new JPanel()
-			protected void paintComponent(Graphics g) {
-				g.drawImage(ordbg1.getImage(), 0, 0, null);
-				setOpaque(false);
-				super.paintComponent(g);
-			}
-		};
-		// 부모 패널에 현재 이미지를 넣은 패널을 추가
-		panel.setBounds(0, 0, 750, 460);
-		panel_ord.add(panel); // 부모패널.add(현재패널이름, "이름");
-		panel.setLayout(null);
-
-//테이블라벨
-		JLabel lblNewLabel_1 = new JLabel("\uBC1C\uC8FC \uAD00\uB9AC");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("굴림", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(268, 10, 179, 43);
-		panel.add(lblNewLabel_1);
-
-//테이블스크롤패널
-		JScrollPane scrollPane_DE;
-		scrollPane_DE = new JScrollPane();
-		scrollPane_DE.setBounds(45, 87, 674, 347);
-		panel.add(scrollPane_DE);
-		scrollPane_DE.setViewportView(table);
-
-//테이블 클릭 
-		DefaultTableModel Model = new DefaultTableModel(data, colname);
-		JTable table = new JTable(Model);
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int row = table.getSelectedRow();
-
-				selected_dvr_num = (String) table.getModel().getValueAt(row, 0);
-//		String selected_inname = (String) table.getModel().getValueAt(row, 1);
-//		String selected_dvrdate = (String) table.getModel().getValueAt(row, 2);
-//		String selected_dvrcnt = (String) table.getModel().getValueAt(row, 3);
-				selected_rcvdate = (String) table.getModel().getValueAt(row, 4);
-
-			}
-		});
-
-		table.setFillsViewportHeight(true);
-		scrollPane_DE.setViewportView(table);
-
-//주문페이지 추가생성 버튼
-		JButton btnNewButton = new JButton("\uC8FC\uBB38");
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				new Order_in();
-			}
-		});
-
-//주문 삭제 버튼
-		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 16));
-		btnNewButton.setBounds(185, 506, 122, 48);
-		panel_ord.add(btnNewButton);
-		JButton button = new JButton("\uC8FC\uBB38 \uC0AD\uC81C");
-		button.addActionListener(new ActionListener() {
-
-			// 선택한 값의 시간을 가져오기
-			public void actionPerformed(ActionEvent e) {
-
-				for (int i = 0; i < al.size(); i++) {
-					if (al.get(i).getRcv_date() != null) {
-						data[i][4] = format.format(al.get(i).getRcv_date());
-					}
-				}
-
-				// 현재시간 - 선택한 값
-				long minute = 0;
-				String reqDateStr = selected_rcvdate; // ********************************************************************목표시간
-														// 넣기
-				// 현재시간 Date
-				Date curDate = new Date();
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				// 요청시간을 Date로 parsing 후 time가져오기
-
-				Date reqDate;
-				try {
-					reqDate = dateFormat.parse(reqDateStr);
-					long reqDateTime = reqDate.getTime();
-					// 현재시간을 요청시간의 형태로 format 후 time 가져오기
-					curDate = dateFormat.parse(dateFormat.format(curDate));
-					long curDateTime = curDate.getTime();
-					// 분으로 표현
-					minute = (curDateTime - reqDateTime) / 60000;
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-				boolean result = daoo.deletedelivery(selected_dvr_num, minute);
-
-				if (result == false) {
-					JOptionPane.showMessageDialog(null, "주문삭제 실패 : 도착했거나 도착까지 10분 남았습니다.");
-					new Main();
-					frame.dispose();
-
-				}
-
-				else if (result == true) {
-					JOptionPane.showMessageDialog(null, "주문삭제 성공");
-					new Main();
-					frame.dispose();
-				}
-
-			}
-		});
-
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-
-		button.setFont(new Font("굴림", Font.PLAIN, 16));
-		button.setBounds(448, 506, 122, 48);
-		panel_ord.add(button);
-
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-
-		button.setFont(new Font("굴림", Font.PLAIN, 16));
-		button.setBounds(448, 506, 122, 48);
-		panel_ord.add(button);
-
-////////////////////		// 매출화면////////////////////////////////////////////////////////////////////////////////////////
-
-		// 이미지 불러오기
-		ImageIcon slsbg = new ImageIcon("img/menubg.png");
-		Image img8 = slsbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
-		// 크기 조절한 이미지 불러오기
-		ImageIcon slsbg1 = new ImageIcon(img8); // ImageIcon 새변수명 = new ImageIcon(Image변수);
-		// 패널을 생성하고 이미지 산입
-		JPanel panel_sls = new JPanel() { // JPanel 패널이름 = new JPanel()
-			protected void paintComponent(Graphics g) {
-				g.drawImage(slsbg1.getImage(), 0, 0, null);
-				setOpaque(false);
-				super.paintComponent(g);
-			}
-		};
-		// 부모 패널에 현재 이미지를 넣은 패널을 추가
-		menuView.add(panel_sls, "sls"); // 부모패널.add(현재패널이름, "이름");
-		panel_sls.setLayout(null);
-
 //////////////////////		// 메뉴 목록 화면/////////////////////////////////////////////////////////////////////////////////////////
 
 		// 이미지 불러오기
@@ -854,33 +540,33 @@ public class Main {
 		lbl_sell.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				lbl_sell.setIcon(click_sell);
-				menuLayout.show(menuView, "sell");// 클릭 시 sell패널 출력
+				new SellMain();
+				frame.dispose(); // 현재 Window창 종료
 			}
 
 			// 마우스를 올렸을 때
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				lbl_sell.setIcon(click_sell);
-				
-				//다른버튼 원상복구
+
+				// 다른버튼 원상복구
 				lbl_mtr.setIcon(mtr_btn);
 				lbl_ord.setIcon(odr_btn);
 				lbl_rcp.setIcon(rcp_btn);
 				lbl_sls.setIcon(sls_btn);
-				//lbl_sell.setIcon(sell_btn);
+				// lbl_sell.setIcon(sell_btn);
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {// 마우스 눌렀을 때
 				lbl_sell.setIcon(click_sell);
-				
-				//다른버튼 원상복구
+
+				// 다른버튼 원상복구
 				lbl_mtr.setIcon(mtr_btn);
 				lbl_ord.setIcon(odr_btn);
 				lbl_rcp.setIcon(rcp_btn);
 				lbl_sls.setIcon(sls_btn);
-				//lbl_sell.setIcon(sell_btn);
+				// lbl_sell.setIcon(sell_btn);
 			}
 		});
 
@@ -898,15 +584,16 @@ public class Main {
 		lbl_mtr.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				menuLayout.show(menuView, "mtr");// 클릭 시 mtr패널 출력
+				new MtrMain();
+				frame.dispose(); // 현재 Window창 종료
 			}
 
 			// 마우스를 올렸을 때
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				lbl_mtr.setIcon(click_mtr);
-				//다른버튼 원상복구
-				//lbl_mtr.setIcon(mtr_btn);
+				// 다른버튼 원상복구
+				// lbl_mtr.setIcon(mtr_btn);
 				lbl_ord.setIcon(odr_btn);
 				lbl_rcp.setIcon(rcp_btn);
 				lbl_sls.setIcon(sls_btn);
@@ -916,8 +603,8 @@ public class Main {
 			@Override
 			public void mousePressed(MouseEvent e) {// 마우스 눌렀을 때
 				lbl_mtr.setIcon(click_mtr);
-				//다른버튼 원상복구
-				//lbl_mtr.setIcon(mtr_btn);
+				// 다른버튼 원상복구
+				// lbl_mtr.setIcon(mtr_btn);
 				lbl_ord.setIcon(odr_btn);
 				lbl_rcp.setIcon(rcp_btn);
 				lbl_sls.setIcon(sls_btn);
@@ -936,6 +623,7 @@ public class Main {
 		lbl_rcp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				lbl_rcp.setIcon(click_rcp);
 				menuLayout.show(menuView, "rcp");// 클릭 시 rcp패널 출력
 			}
 
@@ -943,10 +631,10 @@ public class Main {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				lbl_rcp.setIcon(click_rcp);
-				//다른버튼 원상복구
+				// 다른버튼 원상복구
 				lbl_mtr.setIcon(mtr_btn);
 				lbl_ord.setIcon(odr_btn);
-				//lbl_rcp.setIcon(rcp_btn);
+				// lbl_rcp.setIcon(rcp_btn);
 				lbl_sls.setIcon(sls_btn);
 				lbl_sell.setIcon(sell_btn);
 			}
@@ -954,10 +642,10 @@ public class Main {
 			@Override
 			public void mousePressed(MouseEvent e) {// 마우스 눌렀을 때
 				lbl_rcp.setIcon(click_rcp);
-				//다른버튼 원상복구
+				// 다른버튼 원상복구
 				lbl_mtr.setIcon(mtr_btn);
 				lbl_ord.setIcon(odr_btn);
-				//lbl_rcp.setIcon(rcp_btn);
+				// lbl_rcp.setIcon(rcp_btn);
 				lbl_sls.setIcon(sls_btn);
 				lbl_sell.setIcon(sell_btn);
 			}
@@ -973,16 +661,17 @@ public class Main {
 		lbl_ord.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				menuLayout.show(menuView, "ord");// 클릭 시 ord패널 출력
+				new DeliveryMain();
+				frame.dispose(); // 현재 Window창 종료
 			}
 
 			// 마우스를 올렸을 때
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				lbl_ord.setIcon(click_odr);
-				//다른버튼 원상복구
+				// 다른버튼 원상복구
 				lbl_mtr.setIcon(mtr_btn);
-				//lbl_ord.setIcon(odr_btn);
+				// lbl_ord.setIcon(odr_btn);
 				lbl_rcp.setIcon(rcp_btn);
 				lbl_sls.setIcon(sls_btn);
 				lbl_sell.setIcon(sell_btn);
@@ -991,9 +680,9 @@ public class Main {
 			@Override
 			public void mousePressed(MouseEvent e) {// 마우스 눌렀을 때
 				lbl_ord.setIcon(click_odr);
-				//다른버튼 원상복구
+				// 다른버튼 원상복구
 				lbl_mtr.setIcon(mtr_btn);
-				//lbl_ord.setIcon(odr_btn);
+				// lbl_ord.setIcon(odr_btn);
 				lbl_rcp.setIcon(rcp_btn);
 				lbl_sls.setIcon(sls_btn);
 				lbl_sell.setIcon(sell_btn);
@@ -1010,29 +699,30 @@ public class Main {
 		lbl_sls.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				menuLayout.show(menuView, "sls");// 클릭 시 sls패널 출력
+				new SalesMain();
+				frame.dispose(); // 현재 Window창 종료
 			}
 
 			// 마우스를 올렸을 때
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				lbl_sls.setIcon(click_sls);
-				//다른버튼 원상복구
+				// 다른버튼 원상복구
 				lbl_mtr.setIcon(mtr_btn);
 				lbl_ord.setIcon(odr_btn);
 				lbl_rcp.setIcon(rcp_btn);
-				//lbl_sls.setIcon(sls_btn);
+				// lbl_sls.setIcon(sls_btn);
 				lbl_sell.setIcon(sell_btn);
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {// 마우스 눌렀을 때
 				lbl_sls.setIcon(click_sls);
-				//다른버튼 원상복구
+				// 다른버튼 원상복구
 				lbl_mtr.setIcon(mtr_btn);
 				lbl_ord.setIcon(odr_btn);
 				lbl_rcp.setIcon(rcp_btn);
-				//lbl_sls.setIcon(sls_btn);
+				// lbl_sls.setIcon(sls_btn);
 				lbl_sell.setIcon(sell_btn);
 			}
 		});
