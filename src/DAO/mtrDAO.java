@@ -59,7 +59,7 @@ public class mtrDAO {
 	 * NUMBER(10), wrh_in_cnt NUMBER(10)
 	 */
 
-	// 현재 쓰고 있는 재고
+	// 현재 재고
 	public ArrayList<mtrVO> useIn() {
 
 		ArrayList<mtrVO> ual = new ArrayList<mtrVO>();
@@ -187,7 +187,7 @@ public class mtrDAO {
 	public void reQuestlistStateUpdate(String vo) {
 		conn();
 		try {
-			String sql = "UPDATE warehouse_Reqest_list SET request_state = 'True' WHERE add_item_list_id = ?";
+			String sql = "UPDATE DELIVERY SET dvr_cnt = 'True' WHERE in_name = ?";
 			pst = conn.prepareStatement(sql);
 			pst.setString(1, vo);
 			pst.executeUpdate();
@@ -218,6 +218,30 @@ public class mtrDAO {
 						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '우유'";
 						pst = conn.prepareStatement(sql);
 						
+					}else if(rs.getString(2).equals("밀가루")) {
+						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '밀가루'";
+						pst = conn.prepareStatement(sql);
+						
+					}else if(rs.getString(2).equals("생크림")) {
+						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '생크림'";
+						pst = conn.prepareStatement(sql);
+						
+					}else if(rs.getString(2).equals("버터")) {
+						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '버터'";
+						pst = conn.prepareStatement(sql);
+						
+					}else if(rs.getString(2).equals("설탕")) {
+						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '설탕'";
+						pst = conn.prepareStatement(sql);
+						
+					}else if(rs.getString(2).equals("계란")) {
+						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '계란'";
+						pst = conn.prepareStatement(sql);
+						
+					}else if(rs.getString(2).equals("팥앙금")) {
+						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '팥앙금'";
+						pst = conn.prepareStatement(sql);
+						
 					}
 					
 				pst.setInt(1, vo.getWrh_in_cnt());
@@ -246,55 +270,50 @@ public class mtrDAO {
 				currValue = rs.getInt(3);
 
 				// 우유면 500ml추가
-				if (rs.getString("item").equals("우유")) {
-					pst = (PreparedStatement) conn.prepareStatement("update stock set amount = ? where item='우유';");
-					pst.setInt(1, currValue + 500);
-					String currMeasure = rs.getString("item");
+				if (rs.getString(2).equals("우유")) {
+					pst = (PreparedStatement) conn.prepareStatement("update INGREDIENT set wrh_in_cnt = ? where item='우유';");
+					pst.setInt(1, currValue + 1);
+					String currMeasure = rs.getString(2);
+					System.out.println(currMeasure + " 500ml 추가");
+				}else if(rs.getString(2).equals("버터")) {
+					pst = (PreparedStatement) conn.prepareStatement("update INGREDIENT set wrh_in_cnt = ? where item='버터';");
+					pst.setInt(1, currValue + 1);
+					String currMeasure = rs.getString(2);
+					System.out.println(currMeasure + " 500ml 추가");
+				}else if(rs.getString(2).equals("밀가루")) {
+					pst = (PreparedStatement) conn.prepareStatement("update INGREDIENT set wrh_in_cnt = ? where item='밀가루';");
+					pst.setInt(1, currValue + 1);
+					String currMeasure = rs.getString(2);
+					System.out.println(currMeasure + " 500ml 추가");
+				}else if(rs.getString(2).equals("계란")) {
+					pst = (PreparedStatement) conn.prepareStatement("update INGREDIENT set wrh_in_cnt = ? where item='계란';");
+					pst.setInt(1, currValue + 1);
+					String currMeasure = rs.getString(2);
+					System.out.println(currMeasure + " 500ml 추가");
+				}else if(rs.getString(2).equals("팥앙금")) {
+					pst = (PreparedStatement) conn.prepareStatement("update INGREDIENT set wrh_in_cnt = ? where item='팥앙금';");
+					pst.setInt(1, currValue + 1);
+					String currMeasure = rs.getString(2);
+					System.out.println(currMeasure + " 500ml 추가");
+				}else if(rs.getString(2).equals("설탕")) {
+					pst = (PreparedStatement) conn.prepareStatement("update INGREDIENT set wrh_in_cnt = ? where item='설탕';");
+					pst.setInt(1, currValue + 1);
+					String currMeasure = rs.getString(2);
+					System.out.println(currMeasure + " 500ml 추가");
+				}else if(rs.getString(2).equals("생크림")) {
+					pst = (PreparedStatement) conn.prepareStatement("update INGREDIENT set wrh_in_cnt = ? where item='생크림';");
+					pst.setInt(1, currValue + 1);
+					String currMeasure = rs.getString(2);
 					System.out.println(currMeasure + " 500ml 추가");
 				}
-				// 나머지 100g추가
-				else {
-					pst = (PreparedStatement) conn.prepareStatement(
-							"update stock set amount = ? where item = '" + rs.getString("item") + "';");
-					pst.setInt(1, currValue + 100);
-					String currMeasure = rs.getString("item");
-					System.out.println(currMeasure + " 100g 추가");
-				}
 				pst.executeUpdate();
-				changeDB("stock");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// 주문승락 : 판매현황 테이블 갱신
-	private void orderAccept() {
-		try {
-			ResultSet rs = pst.executeQuery("select * from orderList;");
-
-			pst = (PreparedStatement) conn.prepareStatement("insert into sale(t_type,item,price) values(?,?,?);");
-
-			// 주문리스트 테이블에 있는 정보를 판매현황 테이블에 집어넣음
-			while (rs.next()) {
-				pst.setString(1, rs.getString("t_type"));
-				pst.setString(2, rs.getString("item"));
-				pst.setString(3, rs.getString("price"));
-				pst.executeUpdate();
-			}
-
-			// 재고현황 테이블에서 재료 소비
-			updateStockTable();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
+	
 	private void updateStockTable() {
 		Statement stmt;
 		try {
@@ -401,10 +420,11 @@ public class mtrDAO {
 				if (rs.getString("in_name").equals(mtr_name))
 					break;
 			}
-			int _cnt = rs.getInt("amount");
-
-			pst = (PreparedStatement) conn.prepareStatement("update stock set amount = ? where item='" + itemIn + "';");
-			pst.setInt(1, currValue - consumnValue);
+			int cnnn = rs.getInt("use_in_cnt");
+			
+			sql ="update INGREDIENT set use_in_cnt = ? where in_name='" + mtr_name + "'";
+			pst = conn.prepareStatement(sql);
+			pst.setInt(3, cnnn - in_cnt);
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
