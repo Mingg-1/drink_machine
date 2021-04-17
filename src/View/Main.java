@@ -125,6 +125,59 @@ public class Main {
 	private JScrollPane scrollPane_DE;
 	// ----------------------------------------------------레시피 끝
 
+	// 라벨 이미지 변경쓰---------------------------------------------
+	private JLabel lbl_sell, lbl_mtr, lbl_rcp, lbl_ord, lbl_sls;
+	//////////////// 판매버튼///////////////////////////////////////
+	// 변하는 이미지
+	ImageIcon clicksell = new ImageIcon("btn/clicksell.png");
+	Image clicksell1 = clicksell.getImage().getScaledInstance(264, 51, Image.SCALE_SMOOTH);
+	ImageIcon click_sell = new ImageIcon(clicksell1);
+	// 원본 이미지
+	ImageIcon sellbtn = new ImageIcon("btn/sellbtn.png");
+	Image sellbtn1 = sellbtn.getImage().getScaledInstance(264, 51, Image.SCALE_SMOOTH);
+	ImageIcon sell_btn = new ImageIcon(sellbtn1);
+
+	//////////////// 재료버튼///////////////////////////////////////
+	// 변하는 이미지
+	ImageIcon clickmtr = new ImageIcon("btn/clickmtr.png");
+	Image clickmtr1 = clickmtr.getImage().getScaledInstance(264, 51, Image.SCALE_SMOOTH);
+	ImageIcon click_mtr = new ImageIcon(clickmtr1);
+	// 원본 이미지
+	ImageIcon mtrbtn = new ImageIcon("btn/mtrbtn.png");
+	Image mtrbtn1 = mtrbtn.getImage().getScaledInstance(264, 51, Image.SCALE_SMOOTH);
+	ImageIcon mtr_btn = new ImageIcon(mtrbtn1);
+
+	//////////////// 레시피버튼///////////////////////////////////////
+	// 변하는 이미지
+	ImageIcon clickrcp = new ImageIcon("btn/clickrcp.png");
+	Image clickrcp1 = clickrcp.getImage().getScaledInstance(264, 51, Image.SCALE_SMOOTH);
+	ImageIcon click_rcp = new ImageIcon(clickrcp1);
+	// 원본 이미지
+	ImageIcon rcpbtn = new ImageIcon("btn/rcpbtn.png");
+	Image rcpbtn1 = rcpbtn.getImage().getScaledInstance(264, 51, Image.SCALE_SMOOTH);
+	ImageIcon rcp_btn = new ImageIcon(rcpbtn1);
+
+	//////////////// 발주버튼///////////////////////////////////////
+	// 변하는 이미지
+	ImageIcon clickodr = new ImageIcon("btn/clickodr.png");
+	Image clickodr1 = clickodr.getImage().getScaledInstance(264, 51, Image.SCALE_SMOOTH);
+	ImageIcon click_odr = new ImageIcon(clickodr1);
+	// 원본 이미지
+	ImageIcon odrbtn = new ImageIcon("btn/odrbtn.png");
+	Image odrbtn1 = odrbtn.getImage().getScaledInstance(264, 51, Image.SCALE_SMOOTH);
+	ImageIcon odr_btn = new ImageIcon(odrbtn1);
+
+	//////////////// 매출버튼///////////////////////////////////////
+	// 변하는 이미지
+	ImageIcon clicksls = new ImageIcon("btn/clicksls.png");
+	Image clicksls1 = clicksls.getImage().getScaledInstance(264, 51, Image.SCALE_SMOOTH);
+	ImageIcon click_sls = new ImageIcon(clicksls1);
+	// 원본 이미지
+	ImageIcon slsbtn = new ImageIcon("btn/slsbtn.png");
+	Image slsbtn1 = slsbtn.getImage().getScaledInstance(264, 51, Image.SCALE_SMOOTH);
+	ImageIcon sls_btn = new ImageIcon(slsbtn1);
+	// ------------------------------------------------------라벨 끝
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -247,7 +300,7 @@ public class Main {
 // 테이블 출력
 // JTable 데이터 초기화
 // 컬럼명은 1차원 배열, 행 데이터는 2차원 배열로 구성
-		String[] colNames = { "재료코드","재료명", "매장수량", "창고수량" };
+		String[] colNames = { "재료코드", "재료명", "매장수량", "창고수량" };
 		String[][] rowDatas = new String[ual.size()][4];
 
 		for (int i = 0; i < ual.size(); i++) {
@@ -260,13 +313,13 @@ public class Main {
 					rowDatas[i][j] = ual.get(i).getIn_name();
 				} else if (j == 2) {
 					rowDatas[i][j] = ual.get(i).getUse_in_cnt() + "";
-				}else if (j == 3) {
+				} else if (j == 3) {
 					rowDatas[i][j] = ual.get(i).getWrh_in_cnt() + "";
 				}
 			}
 		}
 
-	// 이미지 불러오기
+		// 이미지 불러오기
 		ImageIcon mtbg = new ImageIcon("img/menubg.png");
 		Image img3 = mtbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
 		// 크기 조절한 이미지 불러오기
@@ -629,7 +682,7 @@ public class Main {
 			}
 		};
 		// 부모 패널에 현재 이미지를 넣은 패널을 추가
-		panel.setBounds(23, 10, 715, 450);
+		panel.setBounds(0, 0, 750, 460);
 		panel_ord.add(panel); // 부모패널.add(현재패널이름, "이름");
 		panel.setLayout(null);
 
@@ -643,7 +696,7 @@ public class Main {
 //테이블스크롤패널
 		JScrollPane scrollPane_DE;
 		scrollPane_DE = new JScrollPane();
-		scrollPane_DE.setBounds(29, 99, 674, 347);
+		scrollPane_DE.setBounds(45, 87, 674, 347);
 		panel.add(scrollPane_DE);
 		scrollPane_DE.setViewportView(table);
 
@@ -792,33 +845,91 @@ public class Main {
 		menu.add(menuList); // 부모패널.add(현재패널이름, "이름");
 		menuList.setLayout(null);
 
-		JLabel lbl_sell = new JLabel("\uD310\uB9E4");
+///////////////판매 버튼///////////////////////////
+		lbl_sell = new JLabel("");
 		lbl_sell.setForeground(Color.WHITE);
 		lbl_sell.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		lbl_sell.setHorizontalAlignment(SwingConstants.CENTER);
+
 		lbl_sell.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				lbl_sell.setIcon(click_sell);
 				menuLayout.show(menuView, "sell");// 클릭 시 sell패널 출력
 			}
-		});
-		lbl_sell.setBounds(0, 206, 264, 51);
-		menuList.add(lbl_sell);
 
-		JLabel lbl_mtr = new JLabel("\uC7AC\uB8CC\uAD00\uB9AC");
+			// 마우스를 올렸을 때
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lbl_sell.setIcon(click_sell);
+				
+				//다른버튼 원상복구
+				lbl_mtr.setIcon(mtr_btn);
+				lbl_ord.setIcon(odr_btn);
+				lbl_rcp.setIcon(rcp_btn);
+				lbl_sls.setIcon(sls_btn);
+				//lbl_sell.setIcon(sell_btn);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {// 마우스 눌렀을 때
+				lbl_sell.setIcon(click_sell);
+				
+				//다른버튼 원상복구
+				lbl_mtr.setIcon(mtr_btn);
+				lbl_ord.setIcon(odr_btn);
+				lbl_rcp.setIcon(rcp_btn);
+				lbl_sls.setIcon(sls_btn);
+				//lbl_sell.setIcon(sell_btn);
+			}
+		});
+
+		menuList.add(lbl_sell);
+		// 기본 이미지
+		lbl_sell.setIcon(sell_btn);
+		lbl_sell.setBounds(0, 206, 264, 51);
+
+///////////////////////재료버튼////////////////////////////////////////////////////////////		
+		lbl_mtr = new JLabel("");
 		lbl_mtr.setForeground(Color.WHITE);
 		lbl_mtr.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		lbl_mtr.setHorizontalAlignment(SwingConstants.CENTER);
+
 		lbl_mtr.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "mtr");// 클릭 시 mtr패널 출력
 			}
+
+			// 마우스를 올렸을 때
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lbl_mtr.setIcon(click_mtr);
+				//다른버튼 원상복구
+				//lbl_mtr.setIcon(mtr_btn);
+				lbl_ord.setIcon(odr_btn);
+				lbl_rcp.setIcon(rcp_btn);
+				lbl_sls.setIcon(sls_btn);
+				lbl_sell.setIcon(sell_btn);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {// 마우스 눌렀을 때
+				lbl_mtr.setIcon(click_mtr);
+				//다른버튼 원상복구
+				//lbl_mtr.setIcon(mtr_btn);
+				lbl_ord.setIcon(odr_btn);
+				lbl_rcp.setIcon(rcp_btn);
+				lbl_sls.setIcon(sls_btn);
+				lbl_sell.setIcon(sell_btn);
+			}
 		});
 		lbl_mtr.setBounds(0, 265, 264, 51);
 		menuList.add(lbl_mtr);
+		lbl_mtr.setIcon(mtr_btn);
 
-		JLabel lbl_rcp = new JLabel("\uB808\uC2DC\uD53C");
+////////////////레시피 버튼////////////////////////////////////////////////////////////////		
+		lbl_rcp = new JLabel("");
 		lbl_rcp.setForeground(Color.WHITE);
 		lbl_rcp.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		lbl_rcp.setHorizontalAlignment(SwingConstants.CENTER);
@@ -827,11 +938,35 @@ public class Main {
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "rcp");// 클릭 시 rcp패널 출력
 			}
+
+			// 마우스를 올렸을 때
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lbl_rcp.setIcon(click_rcp);
+				//다른버튼 원상복구
+				lbl_mtr.setIcon(mtr_btn);
+				lbl_ord.setIcon(odr_btn);
+				//lbl_rcp.setIcon(rcp_btn);
+				lbl_sls.setIcon(sls_btn);
+				lbl_sell.setIcon(sell_btn);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {// 마우스 눌렀을 때
+				lbl_rcp.setIcon(click_rcp);
+				//다른버튼 원상복구
+				lbl_mtr.setIcon(mtr_btn);
+				lbl_ord.setIcon(odr_btn);
+				//lbl_rcp.setIcon(rcp_btn);
+				lbl_sls.setIcon(sls_btn);
+				lbl_sell.setIcon(sell_btn);
+			}
 		});
 		lbl_rcp.setBounds(0, 326, 264, 51);
 		menuList.add(lbl_rcp);
 
-		JLabel lbl_ord = new JLabel("\uBC1C\uC8FC");
+/////////////////////발주버튼///////////////////////////////////////////////////////////////////		
+		lbl_ord = new JLabel("");
 		lbl_ord.setForeground(Color.WHITE);
 		lbl_ord.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		lbl_ord.setHorizontalAlignment(SwingConstants.CENTER);
@@ -840,11 +975,35 @@ public class Main {
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "ord");// 클릭 시 ord패널 출력
 			}
+
+			// 마우스를 올렸을 때
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lbl_ord.setIcon(click_odr);
+				//다른버튼 원상복구
+				lbl_mtr.setIcon(mtr_btn);
+				//lbl_ord.setIcon(odr_btn);
+				lbl_rcp.setIcon(rcp_btn);
+				lbl_sls.setIcon(sls_btn);
+				lbl_sell.setIcon(sell_btn);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {// 마우스 눌렀을 때
+				lbl_ord.setIcon(click_odr);
+				//다른버튼 원상복구
+				lbl_mtr.setIcon(mtr_btn);
+				//lbl_ord.setIcon(odr_btn);
+				lbl_rcp.setIcon(rcp_btn);
+				lbl_sls.setIcon(sls_btn);
+				lbl_sell.setIcon(sell_btn);
+			}
 		});
 		lbl_ord.setBounds(0, 387, 264, 51);
 		menuList.add(lbl_ord);
 
-		JLabel lbl_sls = new JLabel("\uB9E4\uCD9C");
+///////////////////////////////매출버튼////////////////////////////////////////////////		
+		lbl_sls = new JLabel("");
 		lbl_sls.setForeground(Color.WHITE);
 		lbl_sls.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		lbl_sls.setHorizontalAlignment(SwingConstants.CENTER);
@@ -852,6 +1011,29 @@ public class Main {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				menuLayout.show(menuView, "sls");// 클릭 시 sls패널 출력
+			}
+
+			// 마우스를 올렸을 때
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lbl_sls.setIcon(click_sls);
+				//다른버튼 원상복구
+				lbl_mtr.setIcon(mtr_btn);
+				lbl_ord.setIcon(odr_btn);
+				lbl_rcp.setIcon(rcp_btn);
+				//lbl_sls.setIcon(sls_btn);
+				lbl_sell.setIcon(sell_btn);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {// 마우스 눌렀을 때
+				lbl_sls.setIcon(click_sls);
+				//다른버튼 원상복구
+				lbl_mtr.setIcon(mtr_btn);
+				lbl_ord.setIcon(odr_btn);
+				lbl_rcp.setIcon(rcp_btn);
+				//lbl_sls.setIcon(sls_btn);
+				lbl_sell.setIcon(sell_btn);
 			}
 		});
 		lbl_sls.setBounds(0, 448, 264, 51);
