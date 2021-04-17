@@ -54,6 +54,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
+
 //------------------------------------------------- 발주 끝
 
 //레시피 import----------------------------------------------------
@@ -230,8 +231,7 @@ public class DeliveryMain {
 		menuView.setLayout(menuLayout);
 
 // 발주 화면---------------------------------------------------------------------------
-
-// 테이블
+		// 테이블
 		String[] colname = { "주문번호", "재료이름", "발주일자", "발주수량", "도착예정" };
 
 		String[][] data = new String[al.size()][5];
@@ -307,7 +307,7 @@ public class DeliveryMain {
 		panel.add(scrollPane_DE);
 		scrollPane_DE.setViewportView(table);
 
-//테이블 클릭 
+		// 테이블 클릭
 		DefaultTableModel Model = new DefaultTableModel(data, colname);
 		JTable table = new JTable(Model);
 		table.addMouseListener(new MouseAdapter() {
@@ -316,9 +316,9 @@ public class DeliveryMain {
 				int row = table.getSelectedRow();
 
 				selected_dvr_num = (String) table.getModel().getValueAt(row, 0);
-//		String selected_inname = (String) table.getModel().getValueAt(row, 1);
-//		String selected_dvrdate = (String) table.getModel().getValueAt(row, 2);
-//		String selected_dvrcnt = (String) table.getModel().getValueAt(row, 3);
+//				String selected_inname = (String) table.getModel().getValueAt(row, 1);
+//				String selected_dvrdate = (String) table.getModel().getValueAt(row, 2);
+//				String selected_dvrcnt = (String) table.getModel().getValueAt(row, 3);
 				selected_rcvdate = (String) table.getModel().getValueAt(row, 4);
 
 			}
@@ -327,7 +327,7 @@ public class DeliveryMain {
 		table.setFillsViewportHeight(true);
 		scrollPane_DE.setViewportView(table);
 
-//주문페이지 추가생성 버튼
+		// 주문페이지 추가생성 버튼
 		JButton btnNewButton = new JButton("\uC8FC\uBB38");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -336,7 +336,7 @@ public class DeliveryMain {
 			}
 		});
 
-//주문 삭제 버튼
+		// 주문 삭제 버튼
 		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 16));
 		btnNewButton.setBounds(185, 506, 122, 48);
 		panel_ord.add(btnNewButton);

@@ -148,31 +148,6 @@ public class DeliveryDAO {
 		
 		return result;
 	}
-	
-	
-	
-//	 public ArrayList<DeliveryVO> allMemberReload() {
-//		
-//		DeliveryDAO daoo = new DeliveryDAO();
-//		ArrayList<DeliveryVO> al = daoo.allSelect();     
-//        .setRowCount(0);
-//        
-//        String[][] allMemberInfo = new String[memberList.size()][4];
-//        
-//        for (int i = 0; i < memberList.size(); i++) {
-//           allMemberInfo[i][0] = memberList.get(i).getId();
-//           allMemberInfo[i][1] = memberList.get(i).getName();
-//           allMemberInfo[i][2] = memberList.get(i).getAge();
-//           allMemberInfo[i][3] = memberList.get(i).getState();
-//           allMemberInfo[i][4] = memberList.get(i).getState();
-//           
-//           admin_memberModel.addRow(new Object[] {allMemberInfo[i][0], allMemberInfo[i][1], allMemberInfo[i][2], allMemberInfo[i][3]});
-//           
-//     }
-//
-//	
-//
-//	}
 	 
 }
 	

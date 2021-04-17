@@ -46,6 +46,7 @@ public class Order_in {
 	private JFrame frame;
 	private JComboBox<String> inname;
 	private JTextField dvrcnt;
+	public static DefaultTableModel model=null;
 	
 	DeliveryDAO daoo = new DeliveryDAO();
 	ArrayList<DeliveryVO> al = daoo.allSelect();
@@ -117,7 +118,6 @@ public class Order_in {
 		btn_reset.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
 				frame.dispose();			
 			}
 		});
@@ -147,16 +147,13 @@ public class Order_in {
 				}
 			}
 		}
-		
-		
-		
+			
 		btn_reset.setBounds(27, 348, 109, 23);
 		frame.getContentPane().add(btn_reset);
 		
 		ArrayList<MemberVO> a2 = new ArrayList<MemberVO>();
 		
 		//추가
-
 		JLabel lblNewLabel_1 = new JLabel("\uC7AC\uB8CC \uBAA9\uB85D");
 		lblNewLabel_1.setBounds(27, 155, 74, 25);
 		frame.getContentPane().add(lblNewLabel_1);
@@ -175,8 +172,7 @@ public class Order_in {
 		
 		 inname.setBounds(128, 157, 116, 21);
 		 frame.getContentPane().add(inname);
-		
-		
+	
 		 try {
 			 	connect();
 				String q = "select in_name from INGREDIENT";
@@ -215,30 +211,11 @@ public class Order_in {
 						
 						boolean result = daoo.InsertDelivery(vo);
 						
-						
 						if(result == true) {
 							JOptionPane.showMessageDialog(null, "주문 성공");
-							
-//				            //추가버튼 클릭시, JTable에 행 데이터 추가
-//				            //->먼저 사용자가 입력한 4개의 정보를 가져오기
-//				            String num = deliveryVO.getDvr_num();
-//				            String name = txt_java.getText();
-//				            String  = txt_iot.getText();
-//				            String web = txt_web.getText();
-//				            
-//				            //4개의 정보를 콘솔창에 출력하시오
-//				            System.out.println(name+"/"+ java+"/"+ iot+"/"+ web);
-//				            String[] rowData = {name, java, iot, web};
-//				            model.addRow(rowData);
-							
 							new DeliveryMain();
 							new Order_in();
-							frame.dispose();
-							
-							DefaultTableModel model = new DefaultTableModel(data1, colname);
-							JTable table = new JTable(model);
-							table.updateUI();
-						
+							frame.dispose();					
 						}
 						else {
 							JOptionPane.showMessageDialog(null, "주문실패", "주문", JOptionPane.ERROR_MESSAGE);	
@@ -250,10 +227,5 @@ public class Order_in {
 			});
 			btn_join.setBounds(148, 348, 109, 23);
 			frame.getContentPane().add(btn_join);
-		
-		
 	}
-	
-	
-	
 }
