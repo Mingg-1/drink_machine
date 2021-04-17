@@ -1,13 +1,15 @@
 package DAO;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Vector;
 
-import VO.MemberVO;
 import VO.mtrVO;
 
 public class mtrDAO {
@@ -50,10 +52,17 @@ public class mtrDAO {
 			e.printStackTrace();
 		}
 	}
+
+	/*
+	 * 재료 테이블(코드,재료명,수량,단가,창고수량) CREATE TABLE INGREDIENT( in_code VARCHAR2(100) NOT
+	 * NULL, in_name VARCHAR2(100), use_in_cnt NUMBER(10) NOT NULL, in_prc
+	 * NUMBER(10), wrh_in_cnt NUMBER(10)
+	 */
+
 	// 현재 쓰고 있는 재고
 	public ArrayList<mtrVO> useIn() {
 
-		ArrayList<mtrVO> al = new ArrayList<mtrVO>();
+		ArrayList<mtrVO> ual = new ArrayList<mtrVO>();
 
 		try {
 			conn();
@@ -77,7 +86,7 @@ public class mtrDAO {
 
 				mtrVO vo = new mtrVO(in_code, in_name, use_in_cnt, in_prc, wrh_in_cnt);
 
-				al.add(vo);
+				ual.add(vo);
 				// 학생 객체 생성 후 읽어오기;
 			}
 		} catch (Exception e) {
@@ -85,38 +94,9 @@ public class mtrDAO {
 		} finally {// 예외 상황이 일어나도, 안 일어나도 실행
 			close();
 		}
-		return al;
+		return ual;
 	}
 
-	// 빵을 만들어 추가했을 때 현재 재고에서 만든 수량만큼 재료 차감
-	public boolean updateUseIn(String in_name, int use_in_cnt) {
-
-		boolean result = false;
-		try {
-			conn();
-			String sql = "update student set use_in_cnt = ? where in_name =?";
-			// 3. SQL 구문 준비객체 생성
-			pst = conn.prepareStatement(sql);
-
-			pst.setInt(1, use_in_cnt);
-			pst.setString(2, in_name);
-
-			int cnt = pst.executeUpdate();
-
-			if (cnt > 0) {
-				result = true;
-			} else {
-				result = false;
-			}
-
-		} catch (Exception e) { // 모든 예외상황 처리
-			e.printStackTrace();
-		} finally {// 예외 상황이 일어나도, 안 일어나도 실행
-			close();
-		}
-		return result;
-	}
-	
 	// 현재 창고에 재고 수량
 	public ArrayList<mtrVO> wrhIn() {
 
@@ -154,9 +134,282 @@ public class mtrDAO {
 		}
 		return al;
 	}
-	
-	// 현재 재고를 보충했을 때 창고재고 차감, 현재 재고 가득차기
+
+	// 현재 재고 수량변경
+	public void useInUpdate(mtrVO vo) {
+		conn();
+		try {
+			String sql = "UPDATE INGREDIENT SET use_in_cnt = ? WHERE in_name = ?";
+			pst = conn.prepareStatement(sql);
+			pst.setInt(1, vo.getUse_in_cnt());
+			pst.setString(2, vo.getIn_name());
+
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			close();
+		}
+	}
+
+	// 빵을 만들어 추가했을 때 현재 재고에서 만든 수량만큼 재료 차감
+	public boolean updateUseIn(String in_name, int use_in_cnt) {
+
+		boolean result = false;
+		try {
+			conn();
+			String sql = "update INGREDIENT set use_in_cnt = ? where in_name =?";
+			// 3. SQL 구문 준비객체 생성
+			pst = conn.prepareStatement(sql);
+
+			pst.setInt(1, use_in_cnt);
+			pst.setString(2, in_name);
+
+			int cnt = pst.executeUpdate();
+
+			if (cnt > 0) {
+				result = true;
+			} else {
+				result = false;
+			}
+
+		} catch (Exception e) { // 모든 예외상황 처리
+			e.printStackTrace();
+		} finally {// 예외 상황이 일어나도, 안 일어나도 실행
+			close();
+		}
+		return result;
+	}
+
+	// 입고하면 입고요청 리스트에 있는 입고 확인 상태를 업데이트함
+	public void reQuestlistStateUpdate(String vo) {
+		conn();
+		try {
+			String sql = "UPDATE warehouse_Reqest_list SET request_state = 'True' WHERE add_item_list_id = ?";
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, vo);
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			close();
+		}
+	}
 
 	// 발주하여 재고가 추가되었을 때 창고 재고수량 주문 수 만큼 증가
+	public void wrhUpdate(mtrVO vo) {
+			conn();
+			
+			try {
+				String sql = "select * from INGREDIENT";
+				pst = conn.prepareStatement(sql);
+				rs = pst.executeQuery();
+				
+				int usecnt;
+				
+				while (rs.next()) {
+					
+					usecnt = rs.getInt(3);
+					if(rs.getString(2).equals("우유")) {
+						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '우유'";
+						pst = conn.prepareStatement(sql);
+						
+					}
+					
+				pst.setInt(1, vo.getWrh_in_cnt());
+				pst.setString(2, vo.getIn_name());
+
+				
+				pst.executeUpdate();
+
+				}} catch (SQLException e) {
+				e.printStackTrace();
+
+			} finally {
+				close();
+			}
+		
+		}
+
+	// 재료 주문 : 재고현황 테이블 갱신
+	private void orderMeasure() {
+		try {
+			ResultSet rs = pst.executeQuery("select * from stock;");
+
+			// ice정보를 찾는 작업
+			int currValue;
+			while (rs.next()) {
+				currValue = rs.getInt(3);
+
+				// 우유면 500ml추가
+				if (rs.getString("item").equals("우유")) {
+					pst = (PreparedStatement) conn.prepareStatement("update stock set amount = ? where item='우유';");
+					pst.setInt(1, currValue + 500);
+					String currMeasure = rs.getString("item");
+					System.out.println(currMeasure + " 500ml 추가");
+				}
+				// 나머지 100g추가
+				else {
+					pst = (PreparedStatement) conn.prepareStatement(
+							"update stock set amount = ? where item = '" + rs.getString("item") + "';");
+					pst.setInt(1, currValue + 100);
+					String currMeasure = rs.getString("item");
+					System.out.println(currMeasure + " 100g 추가");
+				}
+				pst.executeUpdate();
+				changeDB("stock");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 주문승락 : 판매현황 테이블 갱신
+	private void orderAccept() {
+		try {
+			ResultSet rs = pst.executeQuery("select * from orderList;");
+
+			pst = (PreparedStatement) conn.prepareStatement("insert into sale(t_type,item,price) values(?,?,?);");
+
+			// 주문리스트 테이블에 있는 정보를 판매현황 테이블에 집어넣음
+			while (rs.next()) {
+				pst.setString(1, rs.getString("t_type"));
+				pst.setString(2, rs.getString("item"));
+				pst.setString(3, rs.getString("price"));
+				pst.executeUpdate();
+			}
+
+			// 재고현황 테이블에서 재료 소비
+			updateStockTable();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void updateStockTable() {
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from INGREDIENT;");
+
+			while (rs.next()) {
+				switch (rs.getString("item")) {
+				case "식빵":
+				case "우유식빵":
+				case "바게트빵":
+				case "베이글":
+				case "꽈배기도넛":
+				case "모닝빵":
+					useFlour();
+					useButter();
+					useSugar();
+					useEgg();
+					useMilk();
+					break;
+					
+				case "단팥빵":
+				case "단팥도넛":
+					useFlour();
+					useButter();
+					useSugar();
+					useEgg();
+					useMilk();
+					useBean();
+					break;
+
+				case "크림빵":
+					useFlour();
+					useButter();
+					useSugar();
+					useEgg();
+					useMilk();
+					useCream();
+					break;
+				
+				}
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 밀가루
+	private void useFlour() {
+		consumnAmount("밀가루", 200);
+		System.out.println("밀가루 200g 소비");
+	}
+
+	// 버터
+	private void useButter() {
+		consumnAmount("버터", 30);
+		System.out.println("버터 30g 소비");
+	}
+
+	// 설탕 5그람 소비
+	private void useSugar() {
+		consumnAmount("설탕", 40);
+		System.out.println("설탕 40g 소비");
+	}
+	
+	// 계란 2개 소비
+	private void useEgg() {
+		consumnAmount("계란", 2);
+		System.out.println("계란 2개 소비");
+	}
+	
+	// 팥앙금
+	private void useBean() {
+		consumnAmount("팥앙금", 10);
+		System.out.println("팥앙금 10g 소비");
+	}
+
+	// 생크림
+	private void useCream() {
+		consumnAmount("생크림", 50);
+		System.out.println("생크림 50g 소비");
+	}
+	
+	// 우유 120ml 소비
+	private void useMilk() {
+		consumnAmount("우유", 300);
+		System.out.println("우유 300ml 소비");
+	}
+
+
+	// 재료를 소비하는 메소드 : 인수(재료, 소비량)
+	private void consumnAmount(String mtr_name, int in_cnt) {
+		try {
+			conn();
+			String sql = "select * from INGREDIENT";
+			pst = conn.prepareStatement(sql);
+
+			rs = pst.executeQuery();
+
+			// 재료에 해당하는 amount값 찾는 과정
+			while (rs.next()) {
+				if (rs.getString("in_name").equals(mtr_name))
+					break;
+			}
+			int _cnt = rs.getInt("amount");
+
+			pst = (PreparedStatement) conn.prepareStatement("update stock set amount = ? where item='" + itemIn + "';");
+			pst.setInt(1, currValue - consumnValue);
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
