@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.EventQueue;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
@@ -56,12 +57,6 @@ import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 //-------------------------------------------------        
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Paint;
-import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
@@ -74,17 +69,11 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
-import org.jfree.chart.renderer.category.StandardBarPainter;
-import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.ui.GradientPaintTransformType;
-import org.jfree.ui.HorizontalAlignment;
-import org.jfree.ui.StandardGradientPaintTransformer;
 import org.jfree.ui.TextAnchor;
 
-//       import-------------------adasd---------------------------------------------------
+//       import----------------------------------------------------
 import java.awt.CardLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
@@ -113,11 +102,38 @@ import java.awt.event.MouseWheelListener;
 import java.awt.event.MouseWheelEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollBar;
-import java.awt.Rectangle;
-//-------------------------------------------------         
 
-public class SalesMain {
+//-----------------------------------------------------------------------------------
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Paint;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.CategoryItemLabelGenerator;
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.DatasetRenderingOrder;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.ui.GradientPaintTransformType;
+import org.jfree.ui.HorizontalAlignment;
+import org.jfree.ui.StandardGradientPaintTransformer;
+import org.jfree.ui.TextAnchor;
 
+public class PolylineBarChart {
+   
    private JFrame frame;
    CardLayout menuLayout; // ī 巹 ̾ƿ      
    //     ̹       澲---------------------------------------------
@@ -171,20 +187,23 @@ public class SalesMain {
    ImageIcon slsbtn = new ImageIcon("btn/slsbtn.png");
    Image slsbtn1 = slsbtn.getImage().getScaledInstance(264, 51, Image.SCALE_SMOOTH);
    ImageIcon sls_btn = new ImageIcon(slsbtn1);
+   private JPanel panel;
    private JPanel panel_1;
    private JPanel panel_2;
-   private JPanel panel;
    // ------------------------------------------------------     
 
-   public static void main(String[] args) {
+       // Run As > Java Application 으로 실행하면 바로 확인할 수 있음.
+  
+   public static void main(final String[] args) {
+   
+          
       EventQueue.invokeLater(new Runnable() {
          public void run() {
             try {
                   PolylineBarChart demo = new PolylineBarChart();
                    JFreeChart chart = demo.getChart();
                    ChartFrame frame1=new ChartFrame("Bar Chart",chart);
-                   frame1.setBounds(new Rectangle(722, 556, 0, 0));
-                   frame1.setSize(742,290); 
+                   frame1.setSize(1029,631); 
                    frame1.setVisible(true);   
 //               SalesMain window = new SalesMain();
 //               window.frame.setVisible(true);
@@ -194,12 +213,12 @@ public class SalesMain {
          }
       });
    }
-
-   public SalesMain() {
-      initialize();
-      frame.setVisible(true);
+   
+   public PolylineBarChart() {
+         initialize();
+         frame.setVisible(true);
    }
-
+   
    private void initialize() {
       frame = new JFrame();
       //       â ũ  
@@ -257,45 +276,38 @@ public class SalesMain {
       menuView.setLayout(menuLayout);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////      //     ȭ  ////////////////////////////////////////////////////////////////////////////////////////
+//////////////// Ǹ  ȭ  ////////////////////////////////////////////////////////////////////////////////////////////   
 
       //  ̹     ҷ     
-      ImageIcon slsbg = new ImageIcon("img/menubg.png");
-      Image img8 = slsbg.getImage(); // Image          = ImageIcon      .getImage();
+      ImageIcon slbg = new ImageIcon("img/menubg.png");
+      Image img9 = slbg.getImage(); // Image          = ImageIcon      .getImage();
       // ũ           ̹     ҷ     
-      ImageIcon slsbg1 = new ImageIcon(img8); // ImageIcon          = new ImageIcon(Image    );
+      ImageIcon slbg1 = new ImageIcon(img9); // ImageIcon          = new ImageIcon(Image    );
       //  г         ϰ   ̹        
-      JPanel panel_sls = new JPanel() { // JPanel  г  ̸  = new JPanel()
+      JPanel panel_sell = new JPanel() { // JPanel  г  ̸  = new JPanel()
          protected void paintComponent(Graphics g) {
-            g.drawImage(slsbg1.getImage(), 0, 0, null);
+            g.drawImage(slbg1.getImage(), 0, 0, null);
             setOpaque(false);
             super.paintComponent(g);
          }
       };
       //  θ   гο        ̹            г     ߰ 
-      menuView.add(panel_sls, "sls"); //  θ  г .add(     г  ̸ , " ̸ ");
-      panel_sls.setLayout(null);
-      
-      panel_1 = new JPanel();
-      panel_1.setBounds(12, 10, 351, 303);
-      panel_sls.add(panel_1);
-      
-      panel_2 = new JPanel();
-      panel_2.setBounds(387, 10, 351, 303);
-      panel_sls.add(panel_2);
+      menuView.add(panel_sell, "sell"); //  θ  г .add(     г  ̸ , " ̸ ");
+      panel_sell.setLayout(null);
       
       panel = new JPanel();
-      panel.setBounds(12, 337, 726, 245);
-      panel_sls.add(panel);
+      panel.setBounds(12, 303, 726, 279);
+      panel_sell.add(panel);
       
+      panel_1 = new JPanel();
+      panel_1.setBounds(12, 10, 361, 284);
+      panel_sell.add(panel_1);
       
-      
-      
-      
-      
+      panel_2 = new JPanel();
+      panel_2.setBounds(385, 10, 353, 284);
+      panel_sell.add(panel_2);
 
-//////////////////////      //  ޴      ȭ  /////////////////////////////////////////////////////////////////////////////////////////
+
 
       //  ̹     ҷ     
       ImageIcon mlbg = new ImageIcon("img/menulist.png");
@@ -324,33 +336,33 @@ public class SalesMain {
       lbl_sell.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent arg0) {
-            new SellMain();
-            frame.dispose(); //      Windowâ     
+            lbl_sell.setIcon(click_sell);
+            menuLayout.show(menuView, "sell");// Ŭ      sell г     
          }
 
          //    콺    ÷      
          @Override
          public void mouseEntered(MouseEvent e) {
             lbl_sell.setIcon(click_sell);
-            
-            // ٸ   ư    󺹱 
+
+            //  ٸ   ư    󺹱 
             lbl_mtr.setIcon(mtr_btn);
             lbl_ord.setIcon(odr_btn);
             lbl_rcp.setIcon(rcp_btn);
             lbl_sls.setIcon(sls_btn);
-            //lbl_sell.setIcon(sell_btn);
+            // lbl_sell.setIcon(sell_btn);
          }
 
          @Override
          public void mousePressed(MouseEvent e) {//    콺          
             lbl_sell.setIcon(click_sell);
-            
-            // ٸ   ư    󺹱 
+
+            //  ٸ   ư    󺹱 
             lbl_mtr.setIcon(mtr_btn);
             lbl_ord.setIcon(odr_btn);
             lbl_rcp.setIcon(rcp_btn);
             lbl_sls.setIcon(sls_btn);
-            //lbl_sell.setIcon(sell_btn);
+            // lbl_sell.setIcon(sell_btn);
          }
       });
 
@@ -376,8 +388,8 @@ public class SalesMain {
          @Override
          public void mouseEntered(MouseEvent e) {
             lbl_mtr.setIcon(click_mtr);
-            // ٸ   ư    󺹱 
-            //lbl_mtr.setIcon(mtr_btn);
+            //  ٸ   ư    󺹱 
+            // lbl_mtr.setIcon(mtr_btn);
             lbl_ord.setIcon(odr_btn);
             lbl_rcp.setIcon(rcp_btn);
             lbl_sls.setIcon(sls_btn);
@@ -387,8 +399,8 @@ public class SalesMain {
          @Override
          public void mousePressed(MouseEvent e) {//    콺          
             lbl_mtr.setIcon(click_mtr);
-            // ٸ   ư    󺹱 
-            //lbl_mtr.setIcon(mtr_btn);
+            //  ٸ   ư    󺹱 
+            // lbl_mtr.setIcon(mtr_btn);
             lbl_ord.setIcon(odr_btn);
             lbl_rcp.setIcon(rcp_btn);
             lbl_sls.setIcon(sls_btn);
@@ -415,10 +427,10 @@ public class SalesMain {
          @Override
          public void mouseEntered(MouseEvent e) {
             lbl_rcp.setIcon(click_rcp);
-            // ٸ   ư    󺹱 
+            //  ٸ   ư    󺹱 
             lbl_mtr.setIcon(mtr_btn);
             lbl_ord.setIcon(odr_btn);
-            //lbl_rcp.setIcon(rcp_btn);
+            // lbl_rcp.setIcon(rcp_btn);
             lbl_sls.setIcon(sls_btn);
             lbl_sell.setIcon(sell_btn);
          }
@@ -426,10 +438,10 @@ public class SalesMain {
          @Override
          public void mousePressed(MouseEvent e) {//    콺          
             lbl_rcp.setIcon(click_rcp);
-            // ٸ   ư    󺹱 
+            //  ٸ   ư    󺹱 
             lbl_mtr.setIcon(mtr_btn);
             lbl_ord.setIcon(odr_btn);
-            //lbl_rcp.setIcon(rcp_btn);
+            // lbl_rcp.setIcon(rcp_btn);
             lbl_sls.setIcon(sls_btn);
             lbl_sell.setIcon(sell_btn);
          }
@@ -446,16 +458,16 @@ public class SalesMain {
          @Override
          public void mouseClicked(MouseEvent e) {
             new DeliveryMain();
-            frame.dispose(); //      Windowâ     
+            frame.dispose(); //      Windowâ      
          }
 
          //    콺    ÷      
          @Override
          public void mouseEntered(MouseEvent e) {
             lbl_ord.setIcon(click_odr);
-            // ٸ   ư    󺹱 
+            //  ٸ   ư    󺹱 
             lbl_mtr.setIcon(mtr_btn);
-            //lbl_ord.setIcon(odr_btn);
+            // lbl_ord.setIcon(odr_btn);
             lbl_rcp.setIcon(rcp_btn);
             lbl_sls.setIcon(sls_btn);
             lbl_sell.setIcon(sell_btn);
@@ -464,9 +476,9 @@ public class SalesMain {
          @Override
          public void mousePressed(MouseEvent e) {//    콺          
             lbl_ord.setIcon(click_odr);
-            // ٸ   ư    󺹱 
+            //  ٸ   ư    󺹱 
             lbl_mtr.setIcon(mtr_btn);
-            //lbl_ord.setIcon(odr_btn);
+            // lbl_ord.setIcon(odr_btn);
             lbl_rcp.setIcon(rcp_btn);
             lbl_sls.setIcon(sls_btn);
             lbl_sell.setIcon(sell_btn);
@@ -483,30 +495,30 @@ public class SalesMain {
       lbl_sls.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
-            lbl_sls.setIcon(click_sls);
-            menuLayout.show(menuView, "sls");// Ŭ      sls г     
+            new PolylineBarChart();
+            frame.dispose(); //      Windowâ     
          }
 
          //    콺    ÷      
          @Override
          public void mouseEntered(MouseEvent e) {
             lbl_sls.setIcon(click_sls);
-            // ٸ   ư    󺹱 
+            //  ٸ   ư    󺹱 
             lbl_mtr.setIcon(mtr_btn);
             lbl_ord.setIcon(odr_btn);
             lbl_rcp.setIcon(rcp_btn);
-            //lbl_sls.setIcon(sls_btn);
+            // lbl_sls.setIcon(sls_btn);
             lbl_sell.setIcon(sell_btn);
          }
 
          @Override
          public void mousePressed(MouseEvent e) {//    콺          
             lbl_sls.setIcon(click_sls);
-            // ٸ   ư    󺹱 
+            //  ٸ   ư    󺹱 
             lbl_mtr.setIcon(mtr_btn);
             lbl_ord.setIcon(odr_btn);
             lbl_rcp.setIcon(rcp_btn);
-            //lbl_sls.setIcon(sls_btn);
+            // lbl_sls.setIcon(sls_btn);
             lbl_sell.setIcon(sell_btn);
          }
       });
@@ -514,8 +526,9 @@ public class SalesMain {
       menuList.add(lbl_sls);
 
    }
-   
-   
+
+
+
     public JFreeChart getChart() {
 
         // 데이터 생성
@@ -632,6 +645,4 @@ public class SalesMain {
         return chart;
 
     }
-   
-   
 }
