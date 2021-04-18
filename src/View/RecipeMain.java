@@ -87,6 +87,7 @@ import java.awt.event.MouseWheelEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollBar;
 import java.awt.Image;
+import javax.swing.Icon;
 
 //-------------------------------------------------레시피 끝
 
@@ -289,11 +290,6 @@ public class RecipeMain {
       menuView.add(panel_rcp, "rcp"); // 부모패널.add(현재패널이름, "이름");
       panel_rcp.setLayout(null);
 
-      JLabel lblNewLabel = new JLabel("\uB808\uC2DC\uD53C"); // 레시피 상단 글자
-      lblNewLabel.setForeground(new Color(245, 255, 250));
-      lblNewLabel.setBounds(12, 26, 57, 15);
-      panel_rcp.add(lblNewLabel);
-
       // 이미지 불러오기
       ImageIcon rcpbg = new ImageIcon("img/menubg.png");
       Image img5 = rcpbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
@@ -311,7 +307,7 @@ public class RecipeMain {
       panel_1.setBounds(0, 59, 750, 533);
       panel_rcp.add(panel_1); // 부모패널.add(현재패널이름, "이름");
       panel_1.setLayout(null);
-
+      
       brdCode_Rcp = new JTextField();// 빵코드
       brdCode_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 13));
       brdCode_Rcp.setBounds(25, 414, 100, 20);
@@ -587,7 +583,12 @@ public class RecipeMain {
       JPanel pan_brdImg = new JPanel();
       pan_brdImg.setBounds(515, 10, 210, 163);
       panel_1.add(pan_brdImg);
-
+      
+      ImageIcon rcplogo = new ImageIcon("img/rcplogo.png");
+      JLabel lblNewLabel = new JLabel(rcplogo);
+      lblNewLabel.setBounds(12, 22, 197, 43);
+      panel_rcp.add(lblNewLabel);
+      
       
 
 //////////////////////      // 메뉴 목록 화면/////////////////////////////////////////////////////////////////////////////////////////
