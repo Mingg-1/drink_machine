@@ -363,6 +363,8 @@ public class RecipeMain {
 
                }
             });
+            
+           
             btnInsertBrd_Rcp.setFont(new Font("HY∞ﬂ∞ÌµÒ", Font.PLAIN, 17));
             panel_1.add(btnInsertBrd_Rcp);
 
@@ -495,8 +497,9 @@ public class RecipeMain {
                   label_7_Rcp.setFont(new Font("210 π„¿««ÿ∫Ø R", Font.PLAIN, 14));
                   label_7_Rcp.setBounds(324, 460, 57, 15);
                   panel_1.add(label_7_Rcp);
-
-                  JButton btnInsertIn_Rcp = new JButton("\uB808\uC2DC\uD53C \uC7AC\uB8CC \uCD94\uAC00");
+                  
+                  ImageIcon addrcp = new ImageIcon("btn/addrcp.jpg"); 
+                  JButton btnInsertIn_Rcp = new JButton(addrcp);
                   btnInsertIn_Rcp.addActionListener(new ActionListener() {
                      public void actionPerformed(ActionEvent e) {
                         String in_name = Inname_Rcp.getText();
