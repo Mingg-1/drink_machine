@@ -142,6 +142,9 @@ public class SalesMain {
 	ImageIcon slsbtn = new ImageIcon("btn/slsbtn.png");
 	Image slsbtn1 = slsbtn.getImage().getScaledInstance(264, 51, Image.SCALE_SMOOTH);
 	ImageIcon sls_btn = new ImageIcon(slsbtn1);
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
 	// ------------------------------------------------------라벨 끝
 
 	public static void main(String[] args) {
@@ -238,6 +241,21 @@ public class SalesMain {
 		// 부모 패널에 현재 이미지를 넣은 패널을 추가
 		menuView.add(panel_sls, "sls"); // 부모패널.add(현재패널이름, "이름");
 		panel_sls.setLayout(null);
+		
+		ImageIcon c = new ImageIcon("img/c.png");
+		lblNewLabel = new JLabel(c);
+		lblNewLabel.setBounds(12, 326, 726, 256);
+		panel_sls.add(lblNewLabel);
+		
+		ImageIcon a = new ImageIcon("img/a.png");
+		lblNewLabel_1 = new JLabel(a);
+		lblNewLabel_1.setBounds(12, 36, 347, 280);
+		panel_sls.add(lblNewLabel_1);
+		
+		ImageIcon b = new ImageIcon("img/b.png");
+		lblNewLabel_2 = new JLabel(b);
+		lblNewLabel_2.setBounds(380, 36, 358, 280);
+		panel_sls.add(lblNewLabel_2);
 
 //////////////////////		// 메뉴 목록 화면/////////////////////////////////////////////////////////////////////////////////////////
 
