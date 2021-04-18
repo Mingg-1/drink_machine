@@ -72,7 +72,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.omg.CORBA.INITIALIZE;
+//import org.omg.CORBA.INITIALIZE;
 
 import DAO.RecipeDAO;
 import VO.RecipeVO;

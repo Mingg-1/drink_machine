@@ -29,7 +29,12 @@ insert into INGREDIENT (in_code, in_name, use_in_cnt, in_prc, wrh_in_cnt)
 values ('I60', '생크림', 100, 100, 5);
 insert into INGREDIENT (in_code, in_name, use_in_cnt, in_prc, wrh_in_cnt)
 values ('I70', '우유', 100, 100, 10);
-
+insert into INGREDIENT (in_code, in_name, use_in_cnt, in_prc, wrh_in_cnt)
+values ('I80', '딸기쨈', 5, 100, 4);
+insert into INGREDIENT (in_code, in_name, use_in_cnt, in_prc, wrh_in_cnt)
+values ('I90', '소금', 5, 100, 4);
+insert into INGREDIENT (in_code, in_name, use_in_cnt, in_prc, wrh_in_cnt)
+values ('I100', '계피가루', 5, 100, 5);
 -----------------------------------------------------------------------
 
 /*빵 테이블(코드,빵이름,수량,가격)*/

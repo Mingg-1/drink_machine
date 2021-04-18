@@ -298,7 +298,7 @@ public class MtrMain {
 
 // 테이블 출력시 꼭 넣어줘야 함, 패널 아래에 넣어주기!
 		JScrollPane scroll_mtr = new JScrollPane();
-		scroll_mtr.setBounds(0, 0, 726, 498);
+		scroll_mtr.setBounds(0, 0, 726, 238);
 		panel_mtr1.add(scroll_mtr);
 
 //// 테이블 생성, desing에서 jtable클릭해도 됨
@@ -308,6 +308,10 @@ public class MtrMain {
 //mtr_table.setShowVerticalLines(false);//세로 줄 안보이게
 //mtr_table.setShowHorizontalLines(false);//가로 줄 안보이게
 		scroll_mtr.setViewportView(mtr_table);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 258, 726, 219);
+		panel_mtr1.add(panel);
 
 		/*
 		 * TableCellRenderer renderer = new MyTableCellRenderer();
