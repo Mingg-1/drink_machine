@@ -294,16 +294,17 @@ public class DeliveryMain {
 		panel.setLayout(null);
 
 //테이블라벨
-		JLabel lblNewLabel_1 = new JLabel("\uBC1C\uC8FC \uAD00\uB9AC");
+		ImageIcon lbl_icon = new ImageIcon("img/odrlogo.png");
+		JLabel lblNewLabel_1 = new JLabel(lbl_icon);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("굴림", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(268, 10, 179, 43);
+		lblNewLabel_1.setBounds(38, 29, 179, 43);
 		panel.add(lblNewLabel_1);
 
 //테이블스크롤패널
 		JScrollPane scrollPane_DE;
 		scrollPane_DE = new JScrollPane();
-		scrollPane_DE.setBounds(45, 87, 674, 347);
+		scrollPane_DE.setBounds(38, 92, 674, 347);
 		panel.add(scrollPane_DE);
 		scrollPane_DE.setViewportView(table);
 
@@ -328,7 +329,12 @@ public class DeliveryMain {
 		scrollPane_DE.setViewportView(table);
 
 		// 주문페이지 추가생성 버튼
-		JButton btnNewButton = new JButton("\uC8FC\uBB38");
+		ImageIcon btn_icon = new ImageIcon("btn/ordbtn.png");
+		JButton btnNewButton = new JButton(btn_icon);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -337,10 +343,11 @@ public class DeliveryMain {
 		});
 
 		// 주문 삭제 버튼
+		ImageIcon btn_icon1 = new ImageIcon("btn/orddelbtn.png");
 		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 16));
 		btnNewButton.setBounds(185, 506, 122, 48);
 		panel_ord.add(btnNewButton);
-		JButton button = new JButton("\uC8FC\uBB38 \uC0AD\uC81C");
+		JButton button = new JButton(btn_icon1);
 		button.addActionListener(new ActionListener() {
 
 			// 선택한 값의 시간을 가져오기
@@ -400,7 +407,7 @@ public class DeliveryMain {
 		});
 
 		button.setFont(new Font("굴림", Font.PLAIN, 16));
-		button.setBounds(448, 506, 122, 48);
+		button.setBounds(447, 491, 122, 48);
 		panel_ord.add(button);
 
 		button.addMouseListener(new MouseAdapter() {
