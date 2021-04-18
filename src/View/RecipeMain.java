@@ -290,7 +290,8 @@ public class RecipeMain {
       panel_rcp.setLayout(null);
 
       JLabel lblNewLabel = new JLabel("\uB808\uC2DC\uD53C"); // 레시피 상단 글자
-      lblNewLabel.setBounds(12, 10, 57, 15);
+      lblNewLabel.setForeground(new Color(245, 255, 250));
+      lblNewLabel.setBounds(12, 26, 57, 15);
       panel_rcp.add(lblNewLabel);
 
       // 이미지 불러오기
@@ -307,32 +308,30 @@ public class RecipeMain {
          }
       };
       // 부모 패널에 현재 이미지를 넣은 패널을 추가
-      panel_1.setBounds(0, 35, 750, 557);
+      panel_1.setBounds(0, 59, 750, 533);
       panel_rcp.add(panel_1); // 부모패널.add(현재패널이름, "이름");
       panel_1.setLayout(null);
 
-      JLabel registration_Rcp = new JLabel("\uC0C1\uD488\uB4F1\uB85D");
-      registration_Rcp.setBounds(577, 346, 128, 30);
-      registration_Rcp.setHorizontalAlignment(SwingConstants.CENTER);
-      panel_1.add(registration_Rcp);
-
       brdCode_Rcp = new JTextField();// 빵코드
-      brdCode_Rcp.setBounds(38, 383, 100, 20);
+      brdCode_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 13));
+      brdCode_Rcp.setBounds(25, 414, 100, 20);
       panel_1.add(brdCode_Rcp);
       brdCode_Rcp.setColumns(10);
 
       brdName_Rcp = new JTextField();// 빵이름
-      brdName_Rcp.setBounds(197, 383, 100, 20);
+      brdName_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 13));
+      brdName_Rcp.setBounds(184, 414, 100, 20);
       panel_1.add(brdName_Rcp);
       brdName_Rcp.setColumns(10);
 
       JSpinner brdPrc_Rcp = new JSpinner();// 빵가격
-      brdPrc_Rcp.setBounds(337, 386, 100, 20);
+      brdPrc_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 13));
+      brdPrc_Rcp.setBounds(324, 414, 100, 20);
       panel_1.add(brdPrc_Rcp);
 
       // =========================빵 등록====================================
-            JButton btnInsertBrd_Rcp = new JButton("\uBE75\uCD94\uAC00");
-            btnInsertBrd_Rcp.setBounds(567, 432, 159, 103);
+            JButton btnInsertBrd_Rcp = new JButton("\uC81C\uD488 \uB4F1\uB85D");
+            btnInsertBrd_Rcp.setBounds(592, 414, 134, 90);
             btnInsertBrd_Rcp.addActionListener(new ActionListener() {
                public void actionPerformed(ActionEvent e) {
                   String brd_code = brdCode_Rcp.getText();
@@ -364,22 +363,28 @@ public class RecipeMain {
             btnInsertBrd_Rcp.setFont(new Font("HY견고딕", Font.PLAIN, 17));
             panel_1.add(btnInsertBrd_Rcp);
 
-            JLabel lblNewLabel_3_Rcp = new JLabel("\uBE75\uC774\uB984");
-            lblNewLabel_3_Rcp.setBounds(197, 358, 57, 15);
+            JLabel lblNewLabel_3_Rcp = new JLabel("\uC81C\uD488 \uC774\uB984");
+            lblNewLabel_3_Rcp.setForeground(new Color(245, 245, 245));
+            lblNewLabel_3_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 14));
+            lblNewLabel_3_Rcp.setBounds(184, 389, 57, 15);
             panel_1.add(lblNewLabel_3_Rcp);
 
-            JLabel label_2_Rcp = new JLabel("\uBE75\uCF54\uB4DC");
-            label_2_Rcp.setBounds(38, 358, 57, 15);
+            JLabel label_2_Rcp = new JLabel("\uC81C\uD488 \uCF54\uB4DC");
+            label_2_Rcp.setForeground(new Color(245, 245, 245));
+            label_2_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 14));
+            label_2_Rcp.setBounds(25, 389, 57, 15);
             panel_1.add(label_2_Rcp);
 
-            JLabel label_3_Rcp = new JLabel("\uBE75\uAC00\uACA9");
-            label_3_Rcp.setBounds(337, 361, 57, 15);
+            JLabel label_3_Rcp = new JLabel("\uC81C\uD488 \uAC00\uACA9");
+            label_3_Rcp.setForeground(new Color(245, 245, 245));
+            label_3_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 14));
+            label_3_Rcp.setBounds(324, 392, 57, 15);
             panel_1.add(label_3_Rcp);
 
             // ======================레시피삭제=========================
 
-            JButton btnDeleteBrd_Rcp = new JButton("\uC0AD\uC81C\uD558\uAE30");
-            btnDeleteBrd_Rcp.setBounds(409, 469, 100, 44);
+            JButton btnDeleteBrd_Rcp = new JButton("\uC120\uD0DD \uB808\uC2DC\uD53C \uC0AD\uC81C");
+            btnDeleteBrd_Rcp.setBounds(352, 352, 151, 30);
             btnDeleteBrd_Rcp.addActionListener(new ActionListener() {
                public void actionPerformed(ActionEvent e) {
                   if (brd_name != "") {
@@ -453,32 +458,41 @@ public class RecipeMain {
                   // ================레시피등록=============
 
                   Inname_Rcp = new JTextField();
+                  Inname_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 13));
                   Inname_Rcp.setColumns(10);
-                  Inname_Rcp.setBounds(38, 430, 100, 20);
+                  Inname_Rcp.setBounds(25, 484, 100, 20);
                   panel_1.add(Inname_Rcp);
 
                   Brdname_Rcp = new JTextField();
+                  Brdname_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 13));
                   Brdname_Rcp.setColumns(10);
-                  Brdname_Rcp.setBounds(197, 430, 100, 20);
+                  Brdname_Rcp.setBounds(184, 484, 100, 20);
                   panel_1.add(Brdname_Rcp);
 
                   JSpinner Rcpcnt_Rcp = new JSpinner();
-                  Rcpcnt_Rcp.setBounds(337, 430, 100, 20);
+                  Rcpcnt_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 13));
+                  Rcpcnt_Rcp.setBounds(324, 484, 100, 20);
                   panel_1.add(Rcpcnt_Rcp);
 
-                  JLabel label_5_Rcp = new JLabel("\uC7AC\uB8CC\uC774\uB984");
-                  label_5_Rcp.setBounds(38, 454, 57, 15);
+                  JLabel label_5_Rcp = new JLabel("\uC7AC\uB8CC\uBA85");
+                  label_5_Rcp.setForeground(new Color(245, 245, 245));
+                  label_5_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 14));
+                  label_5_Rcp.setBounds(25, 460, 57, 15);
                   panel_1.add(label_5_Rcp);
 
-                  JLabel label_6_Rcp = new JLabel("\uBE75\uC774\uB984");
-                  label_6_Rcp.setBounds(197, 454, 57, 15);
+                  JLabel label_6_Rcp = new JLabel("\uC81C\uD488 \uC774\uB984");
+                  label_6_Rcp.setForeground(new Color(245, 245, 245));
+                  label_6_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 14));
+                  label_6_Rcp.setBounds(184, 460, 57, 15);
                   panel_1.add(label_6_Rcp);
 
-                  JLabel label_7_Rcp = new JLabel("\uC7AC\uB8CC\uC774\uB984");
-                  label_7_Rcp.setBounds(337, 454, 57, 15);
+                  JLabel label_7_Rcp = new JLabel("\uC7AC\uB8CC \uC218\uB7C9");
+                  label_7_Rcp.setForeground(new Color(245, 245, 245));
+                  label_7_Rcp.setFont(new Font("210 밤의해변 R", Font.PLAIN, 14));
+                  label_7_Rcp.setBounds(324, 460, 57, 15);
                   panel_1.add(label_7_Rcp);
 
-                  JButton btnInsertIn_Rcp = new JButton("\uC7AC\uB8CC\uC124\uC815");
+                  JButton btnInsertIn_Rcp = new JButton("\uB808\uC2DC\uD53C \uC7AC\uB8CC \uCD94\uAC00");
                   btnInsertIn_Rcp.addActionListener(new ActionListener() {
                      public void actionPerformed(ActionEvent e) {
                         String in_name = Inname_Rcp.getText();
@@ -504,25 +518,29 @@ public class RecipeMain {
 
                      }
                   });
-                  btnInsertIn_Rcp.setBounds(38, 469, 97, 44);
+                  btnInsertIn_Rcp.setBounds(449, 414, 134, 90);
                   panel_1.add(btnInsertIn_Rcp);
 
                   JScrollPane scrollRcpInList = new JScrollPane();
-                  scrollRcpInList.setBounds(516, 10, 210, 332);
+                  scrollRcpInList.setFont(new Font("210 밤의해변 R", Font.PLAIN, 13));
+                  scrollRcpInList.setBounds(515, 10, 210, 332);
                   panel_1.add(scrollRcpInList);
 
                   tableRcpInlist = new JTable();
+                  tableRcpInlist.setFont(new Font("210 밤의해변 R", Font.PLAIN, 12));
                   tableRcpInlist.setFillsViewportHeight(true);
                   scrollRcpInList.setViewportView(tableRcpInlist);
                   DefaultTableModel Model_Rcp = new DefaultTableModel(data_rcp, colname_rcp);
 
                   JScrollPane scrollRcpList = new JScrollPane();
-                  scrollRcpList.setBounds(12, 10, 491, 331);
+                  scrollRcpList.setFont(new Font("210 밤의해변 R", Font.PLAIN, 13));
+                  scrollRcpList.setBounds(12, 11, 491, 331);
                   panel_1.add(scrollRcpList);
 
                   new JTable();
                   DefaultTableModel Model_Brd = new DefaultTableModel(data_Brd, colname_Brd);
                   JTable tableRcplist = new JTable(Model_Brd);
+                  tableRcplist.setFont(new Font("210 밤의해변 R", Font.PLAIN, 12));
 //                  int row = table.getSelectedRow();
                   tableRcplist.addMouseListener(new MouseAdapter() {
                      @Override
@@ -560,7 +578,7 @@ public class RecipeMain {
                   scrollRcpList.setViewportView(tableRcplist);
 
       JPanel pan_brdImg = new JPanel();
-      pan_brdImg.setBounds(516, 10, 210, 163);
+      pan_brdImg.setBounds(515, 10, 210, 163);
       panel_1.add(pan_brdImg);
 
       
