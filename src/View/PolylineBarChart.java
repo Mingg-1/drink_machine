@@ -541,18 +541,18 @@ public class PolylineBarChart {
 
         // 그래프 1       
 
-        dataset1.addValue(1050.0, "S1", "1월");
-        dataset1.addValue(1500.0, "S1", "2월");
-        dataset1.addValue(1200.0, "S1", "3월");
-        dataset1.addValue(900.0, "S1", "4월");
-        dataset1.addValue(0.0, "S1", "5월");
-        dataset1.addValue(0.0, "S1", "6월");
-        dataset1.addValue(0.0, "S1", "7월");
-        dataset1.addValue(0.0, "S1", "8월");
-        dataset1.addValue(0, "S1", "9월");
-        dataset1.addValue(0, "S1", "10월");
-        dataset1.addValue(0, "S1", "11월");
-        dataset1.addValue(0, "S1", "12월");
+        dataset1.addValue(1050.0, "2021", "1월");
+        dataset1.addValue(1500.0, "2021", "2월");
+        dataset1.addValue(1200.0, "2021", "3월");
+        dataset1.addValue(900.0, "2021", "4월");
+        dataset1.addValue(0.0, "2021", "5월");
+        dataset1.addValue(0.0, "2021", "6월");
+        dataset1.addValue(0.0, "2021", "7월");
+        dataset1.addValue(0.0, "2021", "8월");
+        dataset1.addValue(0, "2021", "9월");
+        dataset1.addValue(0, "2021", "10월");
+        dataset1.addValue(0, "2021", "11월");
+        dataset1.addValue(0, "2021", "12월");
  
 
         // 렌더링 생성 및 세팅
