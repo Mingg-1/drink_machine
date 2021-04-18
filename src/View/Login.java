@@ -19,6 +19,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPasswordField;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Login {
 
@@ -117,8 +119,13 @@ public class Login {
 		tf_pw.setBounds(759, 301, 106, 21);
 		panel.add(tf_pw);
 		tf_pw.setColumns(10);
-
-		JButton btn_login = new JButton("LOGIN");
+		
+		ImageIcon btn_icon = new ImageIcon("btn/login.png");
+		JButton btn_login = new JButton(btn_icon);
+		btn_login.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		sl_background.putConstraint(SpringLayout.NORTH, btn_login, 23, SpringLayout.SOUTH, tf_pw);
 		sl_background.putConstraint(SpringLayout.WEST, btn_login, 1, SpringLayout.WEST, tf_id);
 		sl_background.putConstraint(SpringLayout.SOUTH, btn_login, -203, SpringLayout.SOUTH, panel);
