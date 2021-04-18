@@ -271,7 +271,7 @@ public class SellMain {
 		// 판매 화면
 	
 		// 이미지 불러오기
-				ImageIcon mnbg3 = new ImageIcon("img/bg.png");
+				ImageIcon mnbg3 = new ImageIcon("img/menubg.png");
 				Image img4 = mnbg3.getImage();
 				// 크기 조절한 이미지 불러오기
 				ImageIcon mnbg5 = new ImageIcon(img4);
@@ -288,376 +288,147 @@ public class SellMain {
 				menuView.add(panel_sell, "sell");
 				panel_sell.setLayout(null);
 
-
-
-		JPanel sell_page = new JPanel();
-		sell_page.setLayout(null);
+		
+		ImageIcon mnbg9 = new ImageIcon("img/menubg.png");
+		Image img9 = mnbg9.getImage();
+		// 크기 조절한 이미지 불러오기
+		ImageIcon mnbg8 = new ImageIcon(img9);
+		// 패널을 생성하고 이미지 삽입
+		JPanel sell_page = new JPanel() {
+			protected void paintComponent(Graphics g) {
+				g.drawImage(mnbg8.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		// 부모 패널에 현재 이미지를 넣은 패널을 추가
 		sell_page.setBounds(0, 0, 501, 674);
 		panel_sell.add(sell_page);
+		sell_page.setLayout(null);
 
-		JPanel next_1 = new JPanel();
-		next_1.setLayout(null);
+		ImageIcon mnbg11 = new ImageIcon("img/menubg.png");
+		Image img11 = mnbg11.getImage();
+		// 크기 조절한 이미지 불러오기
+		ImageIcon mnbg811 = new ImageIcon(img11);
+		// 패널을 생성하고 이미지 삽입
+		JPanel next_1 = new JPanel() {
+			protected void paintComponent(Graphics g) {
+				g.drawImage(mnbg811.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		// 부모 패널에 현재 이미지를 넣은 패널을 추가
 		next_1.setBounds(0, 36, 501, 638);
 		sell_page.add(next_1);
+		next_1.setLayout(null);
+		
+		ImageIcon b1 = new ImageIcon("img/b1.png");
+		JLabel bread_1 = new JLabel(b1);
+		
+		next_1.add(bread_1);
 
-		JLabel bread_1 = new JLabel("");
-		bread_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				bread_1.setIcon(changed_icon_img2);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				bread_1.setIcon(changed_icon_img1);
+		bread_1.setBounds(38, 80, 155, 129);
+		next_1.add(bread_1);
+		
+		ImageIcon t1 = new ImageIcon("btn/t1.png");
+		JButton name_1 = new JButton(t1);
+		name_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		next_1.add(bread_1);
-		bread_1.setIcon(changed_icon_img1);
-
-		bread_1.setBounds(12, 66, 220, 181);
-		next_1.add(bread_1);
-
-		JButton name_1 = new JButton("<html>\r\n<p style=\"text-align:center\">\uC2DD\uBE75<br>2000\uC6D0</p></html>");
-		name_1.setFont(new Font("휴먼옛체", Font.PLAIN, 17));
-		name_1.setBounds(12, 257, 220, 39);
+		name_1.setFont(new Font("210 밤의해변 R", Font.PLAIN, 12));
+		name_1.setBounds(12, 219, 220, 39);
 		next_1.add(name_1);
 
-		JLabel stock_1 = new JLabel("\uC794\uACE0 : 2222");
+		JLabel stock_1 = new JLabel("\uC794\uACE0 : 10");
+		stock_1.setForeground(Color.WHITE);
 		stock_1.setHorizontalAlignment(SwingConstants.CENTER);
-		stock_1.setFont(new Font("함초롬바탕", Font.PLAIN, 17));
-		stock_1.setBounds(12, 295, 220, 25);
+		stock_1.setFont(new Font("210 밤의해변 R", Font.PLAIN, 12));
+		stock_1.setBounds(12, 257, 220, 25);
 		next_1.add(stock_1);
 
-		JLabel bread_2 = new JLabel("");
-		bread_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				bread_2.setIcon(changed_icon_img4);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				bread_2.setIcon(changed_icon_img3);
-			}
-		});
-		next_1.add(bread_2);
-		bread_2.setIcon(changed_icon_img3);
-
-		bread_2.setBounds(269, 66, 220, 181);
+		ImageIcon b2 = new ImageIcon("img/b2.png");
+		JLabel bread_2 = new JLabel(b2);
+		
 		next_1.add(bread_2);
 
-		JButton name_2 = new JButton(
-				"<html>\r\n<p style=\"text-align:center\">\uC6B0\uC720\uC2DD\uBE75<br>2000\uC6D0</p></html>");
-		name_2.setFont(new Font("휴먼옛체", Font.PLAIN, 17));
-		name_2.setBounds(269, 257, 220, 39);
+		bread_2.setBounds(304, 80, 155, 129);
+		next_1.add(bread_2);
+
+		ImageIcon t2 = new ImageIcon("btn/t2.png");
+		JButton name_2 = new JButton(t2);
+		name_2.setFont(new Font("210 밤의해변 R", Font.PLAIN, 12));
+		name_2.setBounds(269, 219, 220, 39);
 		next_1.add(name_2);
 
-		JLabel stock_2 = new JLabel("\uC794\uACE0 : 2222");
+		JLabel stock_2 = new JLabel("\uC794\uACE0 : 8");
+		stock_2.setForeground(Color.WHITE);
 		stock_2.setHorizontalAlignment(SwingConstants.CENTER);
-		stock_2.setFont(new Font("함초롬바탕", Font.PLAIN, 17));
-		stock_2.setBounds(269, 295, 220, 25);
+		stock_2.setFont(new Font("210 밤의해변 R", Font.PLAIN, 12));
+		stock_2.setBounds(269, 257, 220, 25);
 		next_1.add(stock_2);
 
-		JLabel bread_3 = new JLabel("");
-		bread_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				bread_3.setIcon(changed_icon_img6);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				bread_3.setIcon(changed_icon_img5);
-			}
-		});
+		ImageIcon b3 = new ImageIcon("img/6.jpg");
+		JLabel bread_3 = new JLabel(b3);
+		bread_3.setBounds(38, 330, 155, 129);
+		
 		next_1.add(bread_3);
-		bread_3.setIcon(changed_icon_img5);
 
+		ImageIcon t3 = new ImageIcon("btn/t3.png");
 		JButton name_3 = new JButton(
-				"<html>\r\n<p style=\"text-align:center\">\uB2E8\uD325\uBE75<br>2000\uC6D0</p></html>");
-		name_3.setFont(new Font("휴먼옛체", Font.PLAIN, 17));
-		name_3.setBounds(12, 550, 220, 39);
+				t3);
+		name_3.setFont(new Font("210 밤의해변 R", Font.PLAIN, 12));
+		name_3.setBounds(12, 475, 220, 39);
 		next_1.add(name_3);
 
-		JLabel stock_3 = new JLabel("\uC794\uACE0 : 2222");
+		JLabel stock_3 = new JLabel("\uC794\uACE0 : 6");
+		stock_3.setForeground(Color.WHITE);
 		stock_3.setHorizontalAlignment(SwingConstants.CENTER);
-		stock_3.setFont(new Font("함초롬바탕", Font.PLAIN, 17));
-		stock_3.setBounds(12, 591, 220, 25);
+		stock_3.setFont(new Font("210 밤의해변 R", Font.PLAIN, 12));
+		stock_3.setBounds(12, 516, 220, 25);
 		next_1.add(stock_3);
 
-		JLabel bread_4 = new JLabel("");
-		bread_4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				bread_4.setIcon(changed_icon_img8);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				bread_4.setIcon(changed_icon_img7);
-			}
-		});
-		next_1.add(bread_4);
-		bread_4.setIcon(changed_icon_img7);
-
-		bread_4.setBounds(269, 369, 220, 181);
+		ImageIcon b4 = new ImageIcon("img/8.jpg");
+		JLabel bread_4 = new JLabel(b4);
+		
 		next_1.add(bread_4);
 
+		bread_4.setBounds(304, 330, 155, 129);
+		next_1.add(bread_4);
+
+		ImageIcon t4 = new ImageIcon("btn/t4.png");
 		JButton name_4 = new JButton(
-				"<html>\r\n<p style=\"text-align:center\">\uD06C\uB9BC\uBE75<br>2000\uC6D0</p></html>");
-		name_4.setFont(new Font("휴먼옛체", Font.PLAIN, 17));
-		name_4.setBounds(269, 550, 220, 39);
+				t4);
+		name_4.setFont(new Font("210 밤의해변 R", Font.PLAIN, 12));
+		name_4.setBounds(269, 475, 220, 39);
 		next_1.add(name_4);
 
-		JLabel stock_4 = new JLabel("\uC794\uACE0 : 2222");
+		JLabel stock_4 = new JLabel("\uC794\uACE0 : 7");
+		stock_4.setForeground(Color.WHITE);
 		stock_4.setHorizontalAlignment(SwingConstants.CENTER);
-		stock_4.setFont(new Font("함초롬바탕", Font.PLAIN, 17));
-		stock_4.setBounds(269, 591, 220, 25);
+		stock_4.setFont(new Font("210 밤의해변 R", Font.PLAIN, 12));
+		stock_4.setBounds(269, 516, 220, 25);
 		next_1.add(stock_4);
-
-		JButton after_1 = new JButton("\u25B6");
-		after_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-
-				next_1.setVisible(false);
-			}
-		});
-		after_1.setBounds(437, 0, 64, 50);
-		next_1.add(after_1);
-
-		// =================================================================================================================================================================================
-		JPanel next_2 = new JPanel();
-		next_2.setLayout(null);
-		next_2.setBounds(0, 36, 501, 638);
-		sell_page.add(next_2);
-
-		JLabel bread_5 = new JLabel("");
-		bread_5.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				bread_5.setIcon(changed_icon_img10);
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				bread_5.setIcon(changed_icon_img9);
-
-			}
-		});
-		next_2.add(bread_5);
-		bread_5.setIcon(changed_icon_img9);
-
-		bread_5.setBounds(12, 66, 220, 181);
-		next_2.add(bread_5);
-
-		JButton name_5 = new JButton(
-				"<html>\r\n<p style=\"text-align:center\">\uBC14\uAC8C\uD2B8\uBE75<br>2000\uC6D0</p></html>");
-		name_5.setFont(new Font("휴먼옛체", Font.PLAIN, 17));
-		name_5.setBounds(12, 257, 220, 39);
-		next_2.add(name_5);
-
-		JLabel stock_5 = new JLabel("\uC794\uACE0 : 2222");
-		stock_5.setHorizontalAlignment(SwingConstants.CENTER);
-		stock_5.setFont(new Font("함초롬바탕", Font.PLAIN, 17));
-		stock_5.setBounds(12, 295, 220, 25);
-		next_2.add(stock_5);
-
-		JLabel bread_6 = new JLabel("");
-		bread_6.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				bread_6.setIcon(changed_icon_img12);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				bread_6.setIcon(changed_icon_img11);
-			}
-		});
-		next_2.add(bread_6);
-		bread_6.setIcon(changed_icon_img11);
-
-		bread_6.setBounds(269, 66, 220, 181);
-		next_2.add(bread_6);
-
-		JButton name_6 = new JButton(
-				"<html>\r\n<p style=\"text-align:center\">\uBCA0\uC774\uAE00<br>2000\uC6D0</p></html>");
-		name_6.setFont(new Font("휴먼옛체", Font.PLAIN, 17));
-		name_6.setBounds(269, 257, 220, 39);
-		next_2.add(name_6);
-
-		JLabel stock_6 = new JLabel("\uC794\uACE0 : 2222");
-		stock_6.setHorizontalAlignment(SwingConstants.CENTER);
-		stock_6.setFont(new Font("함초롬바탕", Font.PLAIN, 17));
-		stock_6.setBounds(269, 295, 220, 25);
-		next_2.add(stock_6);
-
-		JLabel bread_7 = new JLabel("");
-		bread_7.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				bread_7.setIcon(changed_icon_img14);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				bread_7.setIcon(changed_icon_img13);
-			}
-		});
-		next_2.add(bread_7);
-		bread_7.setIcon(changed_icon_img13);
-
-		bread_7.setBounds(12, 369, 220, 181);
-		next_2.add(bread_7);
-
-		JButton name_7 = new JButton(
-				"<html>\r\n<p style=\"text-align:center\">\uB2E8\uD325\uB3C4\uB11B<br>2000\uC6D0</p></html>");
-		name_7.setFont(new Font("휴먼옛체", Font.PLAIN, 17));
-		name_7.setBounds(12, 550, 220, 39);
-		next_2.add(name_7);
-
-		JLabel stock_7 = new JLabel("\uC794\uACE0 : 2222");
-		stock_7.setHorizontalAlignment(SwingConstants.CENTER);
-		stock_7.setFont(new Font("함초롬바탕", Font.PLAIN, 17));
-		stock_7.setBounds(12, 591, 220, 25);
-		next_2.add(stock_7);
-
-		JLabel bread_8 = new JLabel("");
-		bread_8.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				bread_8.setIcon(changed_icon_img16);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				bread_8.setIcon(changed_icon_img15);
-			}
-
-		});
-
-		next_2.add(bread_8);
-		bread_8.setIcon(changed_icon_img15);
-
-		bread_8.setBounds(269, 369, 220, 181);
-		next_2.add(bread_8);
-
-		JButton name_8 = new JButton(
-				"<html>\r\n<p style=\"text-align:center\">\uAF48\uBC30\uAE30\uB3C4\uB11B<br>2000\uC6D0</p></html>");
-		name_8.setFont(new Font("휴먼옛체", Font.PLAIN, 17));
-		name_8.setBounds(269, 550, 220, 39);
-		next_2.add(name_8);
-
-		JLabel stock_8 = new JLabel("\uC794\uACE0 : 2222");
-		stock_8.setHorizontalAlignment(SwingConstants.CENTER);
-		stock_8.setFont(new Font("함초롬바탕", Font.PLAIN, 17));
-		stock_8.setBounds(269, 591, 220, 25);
-		next_2.add(stock_8);
-
-		JButton before_2 = new JButton("\u25C0");
-		before_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				next_1.setVisible(true);
-			}
-		});
-		before_2.setBounds(0, 0, 64, 50);
-		next_2.add(before_2);
-
-		JButton after_2 = new JButton("\u25B6");
-		after_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				next_2.setVisible(false);
-			}
-		});
-		after_2.setBounds(437, 0, 64, 50);
-		next_2.add(after_2);
-		// ==================================================================================================================================================================================
-
-		JPanel next_3 = new JPanel();
-		next_3.setLayout(null);
-		next_3.setBounds(0, 36, 501, 638);
-		sell_page.add(next_3);
-
-		JLabel bread_9 = new JLabel("");
-		bread_9.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				bread_9.setIcon(changed_icon_img18);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				bread_9.setIcon(changed_icon_img17);
-			}
-		});
-
-		next_3.add(bread_9);
-		bread_9.setIcon(changed_icon_img17);
-
-		bread_9.setBounds(12, 66, 220, 181);
-		next_3.add(bread_9);
-
-		JButton name_9 = new JButton(
-				"<html>\r\n<p style=\"text-align:center\">\uBAA8\uB2DD\uBE75<br>2000\uC6D0</p></html>");
-		name_9.setFont(new Font("휴먼옛체", Font.PLAIN, 17));
-		name_9.setBounds(12, 257, 220, 39);
-		next_3.add(name_9);
-
-		JLabel stock_9 = new JLabel("\uC794\uACE0 : 2222");
-		stock_9.setHorizontalAlignment(SwingConstants.CENTER);
-		stock_9.setFont(new Font("함초롬바탕", Font.PLAIN, 17));
-		stock_9.setBounds(12, 295, 220, 25);
-		next_3.add(stock_9);
-
-		JButton before3 = new JButton("\u25C0");
-		before3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				next_2.setVisible(true);
-			}
-		});
-		before3.setBounds(0, 0, 64, 50);
-		next_3.add(before3);
+		
+		JLabel lblNewLabel = new JLabel("   \u25B6");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("굴림", Font.PLAIN, 33));
+		lblNewLabel.setBounds(424, 10, 65, 39);
+		next_1.add(lblNewLabel);
 
 		// ==================================================================================================================================================================================
 		JLabel label = new JLabel("\uD310\uB9E4");
+		label.setForeground(Color.WHITE);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setBounds(122, 0, 183, 40);
+		label.setBounds(0, 0, 183, 40);
 		sell_page.add(label);
-		label.setFont(new Font("HY목각파임B", Font.BOLD, 22));
+		label.setFont(new Font("210 밤의해변 R", Font.BOLD, 23));
 
 		JPanel panel_10 = new JPanel();
-		panel_10.setBounds(501, 0, 249, 672);
+		panel_10.setBounds(501, 38, 249, 420);
 		panel_sell.add(panel_10);
 		panel_10.setLayout(null);
-
-		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(0, 38, 249, 498);
-		panel_10.add(scrollPane_2);
-
-		JLabel label_2 = new JLabel("\uBA54\uB274");
-		label_2.setHorizontalAlignment(SwingConstants.LEFT);
-		label_2.setFont(new Font("함초롬바탕", Font.BOLD, 20));
-		label_2.setBounds(0, 0, 113, 40);
-		panel_10.add(label_2);
-
-		JLabel label_3 = new JLabel("\uC218\uB7C9");
-		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setFont(new Font("함초롬바탕", Font.BOLD, 20));
-		label_3.setBounds(114, 0, 46, 40);
-		panel_10.add(label_3);
-
-		JLabel label_4 = new JLabel("\uAC00\uACA9");
-		label_4.setHorizontalAlignment(SwingConstants.CENTER);
-		label_4.setFont(new Font("함초롬바탕", Font.BOLD, 20));
-		label_4.setBounds(160, 0, 89, 40);
-		panel_10.add(label_4);
 
 		JButton btnPayment = new JButton("PAYMENT");
 		btnPayment.setBounds(103, 616, 146, 56);
@@ -666,18 +437,45 @@ public class SellMain {
 		JButton btnNewButton_1 = new JButton("RESET");
 		btnNewButton_1.setBounds(0, 616, 106, 56);
 		panel_10.add(btnNewButton_1);
-
-		JLabel label_6 = new JLabel("\uCD1D \uC218\uB7C9:");
-		label_6.setBounds(0, 534, 249, 45);
-		panel_10.add(label_6);
-		label_6.setHorizontalAlignment(SwingConstants.LEFT);
-		label_6.setFont(new Font("함초롬바탕", Font.BOLD, 24));
-
-		JLabel label_7 = new JLabel("\uCD1D \uAC00\uACA9 :");
-		label_7.setBounds(0, 574, 249, 45);
-		panel_10.add(label_7);
-		label_7.setHorizontalAlignment(SwingConstants.LEFT);
-		label_7.setFont(new Font("함초롬바탕", Font.BOLD, 24));
+		
+				JLabel label_2 = new JLabel("\uBA54\uB274");
+				label_2.setForeground(Color.WHITE);
+				label_2.setBounds(501, 0, 113, 40);
+				panel_sell.add(label_2);
+				label_2.setHorizontalAlignment(SwingConstants.LEFT);
+				label_2.setFont(new Font("210 밤의해변 R", Font.BOLD, 22));
+				
+						JLabel label_3 = new JLabel("\uC218\uB7C9");
+						label_3.setForeground(Color.WHITE);
+						label_3.setBounds(609, 0, 46, 40);
+						panel_sell.add(label_3);
+						label_3.setHorizontalAlignment(SwingConstants.CENTER);
+						label_3.setFont(new Font("210 밤의해변 R", Font.BOLD, 22));
+						
+								JLabel label_4 = new JLabel("\uAC00\uACA9");
+								label_4.setForeground(Color.WHITE);
+								label_4.setBounds(649, 0, 89, 40);
+								panel_sell.add(label_4);
+								label_4.setHorizontalAlignment(SwingConstants.CENTER);
+								label_4.setFont(new Font("210 밤의해변 R", Font.BOLD, 22));
+								
+										JScrollPane scrollPane_2 = new JScrollPane();
+										scrollPane_2.setBounds(501, 38, 249, 387);
+										panel_sell.add(scrollPane_2);
+										
+												JLabel label_6 = new JLabel("\uCD1D \uC218\uB7C9:");
+												label_6.setForeground(Color.WHITE);
+												label_6.setBounds(501, 468, 249, 45);
+												panel_sell.add(label_6);
+												label_6.setHorizontalAlignment(SwingConstants.LEFT);
+												label_6.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
+												
+														JLabel label_7 = new JLabel("\uCD1D \uAC00\uACA9 :");
+														label_7.setForeground(Color.WHITE);
+														label_7.setBounds(501, 525, 249, 45);
+														panel_sell.add(label_7);
+														label_7.setHorizontalAlignment(SwingConstants.LEFT);
+														label_7.setFont(new Font("210 밤의해변 R", Font.BOLD, 24));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
