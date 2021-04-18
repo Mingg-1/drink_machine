@@ -322,7 +322,7 @@ public class MtrMain {
 		panel_mtr.setLayout(null);
 
 		JPanel panel_mtr1 = new JPanel();
-		panel_mtr1.setBounds(12, 84, 726, 237);
+		panel_mtr1.setBounds(12, 56, 726, 237);
 		panel_mtr.add(panel_mtr1);
 		panel_mtr1.setLayout(null);
 
@@ -430,6 +430,23 @@ public class MtrMain {
 		JScrollPane scroll_mtrw = new JScrollPane();
 		scroll_mtrw.setBounds(0, 0, 333, 232);
 		wrh_in.add(scroll_mtrw);
+		
+		ImageIcon mtrlogo = new ImageIcon("img/mtrlogo.png");
+		JLabel lblNewLabel = new JLabel(mtrlogo);
+		lblNewLabel.setBounds(12, 10, 179, 43);
+		panel_mtr.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("\uB9E4\uC7A5 \uC7AC\uACE0 \uBD80\uC871 \uC54C\uB9BC");
+		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setFont(new Font("210 밤의해변 R", Font.PLAIN, 18));
+		lblNewLabel_1.setBounds(22, 303, 169, 25);
+		panel_mtr.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("\uCC3D\uACE0 \uC7AC\uACE0 \uBD80\uC871 \uC54C\uB9BC");
+		lblNewLabel_1_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1_1.setFont(new Font("210 밤의해변 R", Font.PLAIN, 18));
+		lblNewLabel_1_1.setBounds(390, 303, 169, 25);
+		panel_mtr.add(lblNewLabel_1_1);
 
 		//// 테이블 생성, desing에서 jtable클릭해도 됨
 
