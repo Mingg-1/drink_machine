@@ -18,6 +18,11 @@ public class mtrVO {
 		this.wrh_in_cnt = wrh_in_cnt;
 	}
 
+	public mtrVO(String in_name, int use_in_cnt) {
+		this.in_name = in_name;
+		this.use_in_cnt = use_in_cnt;
+	}
+
 	public String getIn_code() {
 		return in_code;
 	}

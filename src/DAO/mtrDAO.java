@@ -7,10 +7,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import VO.DeliveryVO;
 import VO.mtrVO;
+import VO.wrhVO;
 
 public class mtrDAO {
 	Connection conn = null;
@@ -58,6 +61,7 @@ public class mtrDAO {
 	 * NULL, in_name VARCHAR2(100), use_in_cnt NUMBER(10) NOT NULL, in_prc
 	 * NUMBER(10), wrh_in_cnt NUMBER(10)
 	 */
+	
 
 	// 현재 재고
 	public ArrayList<mtrVO> useIn() {
@@ -96,16 +100,50 @@ public class mtrDAO {
 		}
 		return ual;
 	}
+	
 
+
+	public ArrayList<DeliveryVO> allSelect() {
+		
+		ArrayList<DeliveryVO> al = new ArrayList<DeliveryVO>();
+
+		conn();
+		String sql = "select * from Delivery";
+
+		try {
+			pst = conn.prepareStatement(sql);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				String dvr_num = rs.getString(1);
+				String in_name = rs.getString(2);
+				Timestamp dvr_date = rs.getTimestamp(3);
+				String dvr_cnt = rs.getString(4);
+				Timestamp rcv_date = rs.getTimestamp(5);
+				
+				DeliveryVO vo = new DeliveryVO(dvr_num, in_name, dvr_date, dvr_cnt, rcv_date);
+				al.add(vo);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			
+		}
+		return al;
+	}
+	
 	// 현재 창고에 재고 수량
-	public ArrayList<mtrVO> wrhIn() {
+	public ArrayList<wrhVO> wrhIn() {
 
-		ArrayList<mtrVO> al = new ArrayList<mtrVO>();
+		ArrayList<wrhVO> wal = new ArrayList<wrhVO>();
 
 		try {
 			conn();
 			// 3. SQL구문 준비 객체(preparedStatement) 생성
-			String sql = "select * from INGREDIENT";
+			String sql = "select i.in_code, i.in_name, i.use_in_cnt, i.wrh_in_cnt, d.dvr_cnt, d.in_name \r\n"
+					+ "from INGREDIENT i, Delivery d \r\n"
+					+ "where i.in_name=d.in_name \r\n"
+			+ "order by i.in_code \r\n";
 			pst = conn.prepareStatement(sql);
 
 			rs = pst.executeQuery();
@@ -119,21 +157,48 @@ public class mtrDAO {
 				String in_code = rs.getString(1);
 				String in_name = rs.getString(2);
 				int use_in_cnt = rs.getInt(3);
-				int in_prc = rs.getInt(4);
-				int wrh_in_cnt = rs.getInt(5);
-
-				mtrVO vo = new mtrVO(in_code, in_name, use_in_cnt, in_prc, wrh_in_cnt);
-
-				al.add(vo);
-				// 학생 객체 생성 후 읽어오기;
+				int wrh_in_cnt = rs.getInt(4);
+				int dvr_cnt = rs.getInt(5);
+				String din_name = rs.getString(6);
+				
+				wrhVO wvo = new wrhVO(in_code, in_name, use_in_cnt, wrh_in_cnt, dvr_cnt, din_name);
+				wal.add(wvo);
+			
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {// 예외 상황이 일어나도, 안 일어나도 실행
 			close();
 		}
-		return al;
+		return wal;
 	}
+	
+	
+	//회원삭제, 중복이 없다는 가정하에
+		public boolean delete(String in_name) {
+			// TODO Auto-generated method stub
+			boolean result = false;
+			conn();
+			String sql = "delete from INGREDIENT where in_name=? ";
+			try {
+				pst = conn.prepareStatement(sql);
+				pst.setString(1, in_name);
+
+				int cnt = pst.executeUpdate();
+				
+				if(cnt>0) {
+					result = true;
+				}else {
+					result = false;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close();
+			}		
+			return result;
+		}
 
 	// 현재 재고 수량변경
 	public void useInUpdate(mtrVO vo) {
@@ -182,6 +247,8 @@ public class mtrDAO {
 		}
 		return result;
 	}
+	
+	
 
 	// 입고하면 입고요청 리스트에 있는 입고 확인 상태를 업데이트함
 	public void reQuestlistStateUpdate(String vo) {
@@ -200,64 +267,7 @@ public class mtrDAO {
 		}
 	}
 
-	// 발주하여 재고가 추가되었을 때 창고 재고수량 주문 수 만큼 증가
-	public void wrhUpdate(mtrVO vo) {
-			conn();
-			
-			try {
-				String sql = "select * from INGREDIENT";
-				pst = conn.prepareStatement(sql);
-				rs = pst.executeQuery();
-				
-				int usecnt;
-				
-				while (rs.next()) {
-					
-					usecnt = rs.getInt(3);
-					if(rs.getString(2).equals("우유")) {
-						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '우유'";
-						pst = conn.prepareStatement(sql);
-						
-					}else if(rs.getString(2).equals("밀가루")) {
-						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '밀가루'";
-						pst = conn.prepareStatement(sql);
-						
-					}else if(rs.getString(2).equals("생크림")) {
-						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '생크림'";
-						pst = conn.prepareStatement(sql);
-						
-					}else if(rs.getString(2).equals("버터")) {
-						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '버터'";
-						pst = conn.prepareStatement(sql);
-						
-					}else if(rs.getString(2).equals("설탕")) {
-						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '설탕'";
-						pst = conn.prepareStatement(sql);
-						
-					}else if(rs.getString(2).equals("계란")) {
-						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '계란'";
-						pst = conn.prepareStatement(sql);
-						
-					}else if(rs.getString(2).equals("팥앙금")) {
-						sql = "UPDATE INGREDIENT SET wrh_in_cnt = ? WHERE in_name = '팥앙금'";
-						pst = conn.prepareStatement(sql);
-						
-					}
-					
-				pst.setInt(1, vo.getWrh_in_cnt());
-				pst.setString(2, vo.getIn_name());
 
-				
-				pst.executeUpdate();
-
-				}} catch (SQLException e) {
-				e.printStackTrace();
-
-			} finally {
-				close();
-			}
-		
-		}
 
 	// 재료 주문 : 재고현황 테이블 갱신
 	private void orderMeasure() {
@@ -430,6 +440,41 @@ public class mtrDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean InsertDelivery1(DeliveryVO vo) {
+		// TODO Auto-generated method stub
+		
+		boolean result = false;
+		conn();
+		String sql = "insert into Delivery values(Dvr_Num_seq.nextval,?,sysdate,?,sysdate+DBMS_RANDOM.VALUE(30,120)/(24*60))";
+		
+		try {
+			pst = conn.prepareStatement(sql);
+//			pst.setString(1, vo.getDvr_num());
+			pst.setString(1, vo.getIn_name());
+			pst.setString(2, vo.getDvr_cnt());
+			
+			int cnt = pst.executeUpdate();
+			
+			if(cnt>0) {
+				result = true;
+			}else {
+				result = false;
+			}
+			
+			if(result == true) {
+				sql ="update INGREDIENT set use_in_cnt = ? where in_name= (select in_name from Delivery)";
+				pst = conn.prepareStatement(sql);
+				pst.executeUpdate();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close();
+		}		
+		return result;
 	}
 
 }

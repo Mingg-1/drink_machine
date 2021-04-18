@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -16,6 +17,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -28,6 +30,7 @@ import DAO.mtrDAO;
 import VO.MemberVO;
 import VO.RecipeVO;
 import VO.mtrVO;
+import VO.wrhVO;
 import View.Order_in;
 
 import java.awt.event.ActionEvent;
@@ -53,8 +56,11 @@ import VO.DeliveryVO;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 //------------------------------------------------- 발주 끝
+import javax.swing.table.TableColumnModel;
 
 //레시피 import----------------------------------------------------
 import java.awt.CardLayout;
@@ -93,10 +99,12 @@ public class MtrMain {
 	CardLayout menuLayout; // 카드레이아웃 선언
 
 	// 재고---------------------------------------------------------
+	private DefaultTableModel model;
 	private JTable mtr_table;
 	private int row; // 선택한 행의 위치
 	mtrDAO mdao = new mtrDAO();
 	ArrayList<mtrVO> ual = new ArrayList<mtrVO>();
+	ArrayList<wrhVO> wal = new ArrayList<wrhVO>();
 	// ------------------------------------------------------------
 
 	// 라벨 이미지 변경쓰---------------------------------------------
@@ -167,6 +175,7 @@ public class MtrMain {
 
 	public MtrMain() {
 		ual = mdao.useIn();
+		wal = mdao.wrhIn();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -255,6 +264,7 @@ public class MtrMain {
 // 테이블 출력
 // JTable 데이터 초기화
 // 컬럼명은 1차원 배열, 행 데이터는 2차원 배열로 구성
+
 		String[] colNames = { "재료코드", "재료명", "매장수량", "창고수량" };
 		String[][] rowDatas = new String[ual.size()][4];
 
@@ -274,6 +284,26 @@ public class MtrMain {
 			}
 		}
 
+		model = new DefaultTableModel(rowDatas, colNames);
+		/*
+		 * rentingReload();
+		 * 
+		 * //- 테이블 객체를 생성하면서 모델을 넣어줌 tb_renting = new JTable(renting);
+		 * 
+		 * //여기는 레이아웃 코드 쏼라쏼라
+		 * 
+		 * // renting 목록 갱신 public void rentingReload() { renting.setRowCount(0); rent =
+		 * mdao.rentingbook(userID); String[][] rentStr = new String[rent.size()][5];
+		 * rentinfoVO.clear(); if (rent.size() != 0) { for (int i = 0; i < rent.size();
+		 * i++) { rentinfoVO.add(i, bdao.BookAllInfo(rent.get(i).getBookid())); } for
+		 * (int i = 0; i < rentinfoVO.size(); i++) { rentStr[i][0] =
+		 * rentinfoVO.get(i).getTitle(); rentStr[i][1] = rentinfoVO.get(i).getAuthor();
+		 * rentStr[i][2] = rentinfoVO.get(i).getEnter(); rentStr[i][3] =
+		 * rentinfoVO.get(i).getTYPE(); rentStr[i][4] = rent.get(i).getReturndate();
+		 * renting.addRow(new Object[] { rentStr[i][0], rentStr[i][1], rentStr[i][2],
+		 * rentStr[i][3], rentStr[i][4] }); } } }
+		 * 
+		 */
 		// 이미지 불러오기
 		ImageIcon mtbg = new ImageIcon("img/menubg.png");
 		Image img3 = mtbg.getImage(); // Image 새변수명 = ImageIcon변수명.getImage();
@@ -292,7 +322,7 @@ public class MtrMain {
 		panel_mtr.setLayout(null);
 
 		JPanel panel_mtr1 = new JPanel();
-		panel_mtr1.setBounds(12, 84, 726, 498);
+		panel_mtr1.setBounds(12, 84, 726, 237);
 		panel_mtr.add(panel_mtr1);
 		panel_mtr1.setLayout(null);
 
@@ -302,16 +332,124 @@ public class MtrMain {
 		panel_mtr1.add(scroll_mtr);
 
 //// 테이블 생성, desing에서 jtable클릭해도 됨
-		JTable mtr_table = new JTable(rowDatas, colNames);
+
+		JTable mtr_table = new JTable(model);
 		mtr_table.setFillsViewportHeight(true);// 전체를 테이블로 채울 때
 		mtr_table.setRowHeight(25);// 행높이
 //mtr_table.setShowVerticalLines(false);//세로 줄 안보이게
 //mtr_table.setShowHorizontalLines(false);//가로 줄 안보이게
+		// 테이블 내용 가운데 정렬하기
+		  DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer(); // 디폴트테이블셀렌더러를 생성
+		  dtcr.setHorizontalAlignment(SwingConstants.CENTER); // 렌더러의 가로정렬을 CENTER로
+		  TableColumnModel tcm = mtr_table.getColumnModel() ; // 정렬할 테이블의 컬럼모델을 가져옴
+
+		  for(int i = 0 ; i < tcm.getColumnCount() ; i++){
+		   tcm.getColumn(i).setCellRenderer(dtcr); // 컬럼모델에서 컬럼의 갯수만큼 컬럼을 가져와 for문을 이용하여
+		             // 각각의 셀렌더러를 아까 생성한 dtcr에 set해줌
 		scroll_mtr.setViewportView(mtr_table);
+		  }
+
+		String[] cols = { "재료명", "매장 수량 부족" };
+		String[][] rows = new String[ual.size()][2];
+
+		for (int i = 0; i < ual.size(); i++) {
+			for (int j = 0; j < 2; j++) {// 컬럼 수 만큼 반복
+
+				if (j == 0) {
+						rows[i][j] = ual.get(i).getIn_name();
+				} else if (j == 1) {
+					if(ual.get(i).getUse_in_cnt()<5) {
+						rows[i][j] = ual.get(i).getUse_in_cnt() + "";
+					}else {
+						rows[i][j] = "-";
+					}
+				}
+			}
+		}
+		model = new DefaultTableModel(rows, cols);
+
+		////////////// 매장 내 재고부족
+		JPanel use_in = new JPanel();
+		use_in.setBounds(22, 338, 333, 232);
+		panel_mtr.add(use_in);
+		use_in.setLayout(null);
+
+		// 테이블 출력시 꼭 넣어줘야 함, 패널 아래에 넣어주기!
+		JScrollPane scroll_mtr1 = new JScrollPane();
+		scroll_mtr1.setBounds(0, 0, 333, 232);
+		use_in.add(scroll_mtr1);
+
+		//// 테이블 생성, desing에서 jtable클릭해도 됨
+
+		JTable mtr_table1 = new JTable(model);
+		mtr_table1.setFillsViewportHeight(true);// 전체를 테이블로 채울 때
+		mtr_table1.setRowHeight(25);// 행높이
+		// mtr_table.setShowVerticalLines(false);//세로 줄 안보이게
+		// mtr_table.setShowHorizontalLines(false);//가로 줄 안보이게
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 258, 726, 219);
-		panel_mtr1.add(panel);
+		// 테이블 내용 가운데 정렬하기
+		  dtcr = new DefaultTableCellRenderer(); // 디폴트테이블셀렌더러를 생성
+		  dtcr.setHorizontalAlignment(SwingConstants.CENTER); // 렌더러의 가로정렬을 CENTER로
+		  tcm = mtr_table1.getColumnModel() ; // 정렬할 테이블의 컬럼모델을 가져옴
+
+		  for(int i = 0 ; i < tcm.getColumnCount() ; i++){
+		   tcm.getColumn(i).setCellRenderer(dtcr); // 컬럼모델에서 컬럼의 갯수만큼 컬럼을 가져와 for문을 이용하여
+		             // 각각의 셀렌더러를 아까 생성한 dtcr에 set해줌
+		   scroll_mtr1.setViewportView(mtr_table1);
+		  }
+		
+
+		String[] wcols = { "재료명", "창고 수량 부족" };
+		String[][] wrows = new String[ual.size()][2];
+
+		for (int i = 0; i < ual.size(); i++) {
+			for (int j = 0; j < 2; j++) {// 컬럼 수 만큼 반복
+
+				if (j == 0) {
+						wrows[i][j] = ual.get(i).getIn_name();
+				} else if (j == 1) {
+					if(ual.get(i).getWrh_in_cnt()<5) {
+						wrows[i][j] = ual.get(i).getWrh_in_cnt() + "";
+						
+					}else {
+						wrows[i][j] = "-";
+					}
+				}
+			}
+		}
+  
+		model = new DefaultTableModel(wrows, wcols);
+
+		/////////// 창고 재고 부족
+		JPanel wrh_in = new JPanel();
+		wrh_in.setBounds(390, 338, 333, 232);
+		panel_mtr.add(wrh_in);
+		wrh_in.setLayout(null);
+		
+		// 테이블 출력시 꼭 넣어줘야 함, 패널 아래에 넣어주기!
+		JScrollPane scroll_mtrw = new JScrollPane();
+		scroll_mtrw.setBounds(0, 0, 333, 232);
+		wrh_in.add(scroll_mtrw);
+
+		//// 테이블 생성, desing에서 jtable클릭해도 됨
+
+		JTable mtr_tablew = new JTable(model);
+		mtr_tablew.setFillsViewportHeight(true);// 전체를 테이블로 채울 때
+		mtr_tablew.setRowHeight(25);// 행높이
+		// mtr_table.setShowVerticalLines(false);//세로 줄 안보이게
+		// mtr_table.setShowHorizontalLines(false);//가로 줄 안보이게
+		
+		// 테이블 내용 가운데 정렬하기
+		  dtcr = new DefaultTableCellRenderer(); // 디폴트테이블셀렌더러를 생성
+		  dtcr.setHorizontalAlignment(SwingConstants.CENTER); // 렌더러의 가로정렬을 CENTER로
+		  tcm = mtr_tablew.getColumnModel() ; // 정렬할 테이블의 컬럼모델을 가져옴
+
+		  for(int i = 0 ; i < tcm.getColumnCount() ; i++){
+		   tcm.getColumn(i).setCellRenderer(dtcr); // 컬럼모델에서 컬럼의 갯수만큼 컬럼을 가져와 for문을 이용하여
+		             // 각각의 셀렌더러를 아까 생성한 dtcr에 set해줌
+		   scroll_mtrw.setViewportView(mtr_tablew);
+		  }
+		  
 
 		/*
 		 * TableCellRenderer renderer = new MyTableCellRenderer();
@@ -405,6 +543,7 @@ public class MtrMain {
 			public void mouseClicked(MouseEvent e) {
 				lbl_mtr.setIcon(click_mtr);
 				menuLayout.show(menuView, "mtr");// 클릭 시 mtr패널 출력
+
 			}
 
 			// 마우스를 올렸을 때
