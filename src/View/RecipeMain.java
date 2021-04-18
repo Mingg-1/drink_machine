@@ -330,7 +330,10 @@ public class RecipeMain {
       panel_1.add(brdPrc_Rcp);
 
       // =========================빵 등록====================================
-            JButton btnInsertBrd_Rcp = new JButton("\uC81C\uD488 \uB4F1\uB85D");
+      
+      //버튼에 이미지 추가
+      ImageIcon addbrd = new ImageIcon("btn/addbrd.jpg"); 
+      JButton btnInsertBrd_Rcp = new JButton(addbrd); //여기에 이미지 추가 변수명 넣기
             btnInsertBrd_Rcp.setBounds(592, 414, 134, 90);
             btnInsertBrd_Rcp.addActionListener(new ActionListener() {
                public void actionPerformed(ActionEvent e) {

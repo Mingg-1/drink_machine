@@ -294,8 +294,9 @@ public class DeliveryMain {
 		panel.setLayout(null);
 
 //테이블라벨
+		//라벨에 이미지 추가
 		ImageIcon lbl_icon = new ImageIcon("img/odrlogo.png");
-		JLabel lblNewLabel_1 = new JLabel(lbl_icon);
+		JLabel lblNewLabel_1 = new JLabel(lbl_icon); //이미지 추가 변수명 넣어주기
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("굴림", Font.PLAIN, 16));
 		lblNewLabel_1.setBounds(38, 29, 179, 43);
