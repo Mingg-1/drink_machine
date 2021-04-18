@@ -188,7 +188,7 @@ public class RecipeMain {
    }
 
    private void initialize() {
-      frame = new JFrame();
+      frame = new JFrame("FRANCE Jang 레시피");
       // 사용할 창 크기
       int use_width = 1029;
       int use_heigt = 631;

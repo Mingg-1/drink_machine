@@ -117,7 +117,7 @@ public class SellMain {
 	}
 
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("FRANCE Jang 판매");
 		// 사용할 창 크기
 		int use_width = 1029;
 		int use_heigt = 631;

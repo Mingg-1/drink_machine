@@ -100,7 +100,7 @@ public class Order_in {
 	}
 
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("FRANCE Jang 발주신청");
 		frame.setBounds(1500, 225, 291, 439);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);

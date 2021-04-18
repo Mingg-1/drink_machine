@@ -48,7 +48,7 @@ public class Login {
 	}
 
 	private void initialize() {
-		frame = new JFrame("br.Jang 로그인");
+		frame = new JFrame("FRANCE Jang 로그인");
 		frame.getContentPane().setLayout(null);
 		// 사용할 창 크기
 		int use_width = 1029;

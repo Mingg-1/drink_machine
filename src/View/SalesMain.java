@@ -163,7 +163,7 @@ public class SalesMain {
 	}
 
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("FRANCE Jang 매출");
 		// 사용할 창 크기
 		int use_width = 1029;
 		int use_heigt = 631;
