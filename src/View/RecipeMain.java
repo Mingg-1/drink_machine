@@ -382,8 +382,9 @@ public class RecipeMain {
             panel_1.add(label_3_Rcp);
 
             // ======================레시피삭제=========================
-
-            JButton btnDeleteBrd_Rcp = new JButton("\uC120\uD0DD \uB808\uC2DC\uD53C \uC0AD\uC81C");
+            
+            ImageIcon del = new ImageIcon("btn/delrcp.jpg");
+            JButton btnDeleteBrd_Rcp = new JButton(del);
             btnDeleteBrd_Rcp.setBounds(352, 352, 151, 30);
             btnDeleteBrd_Rcp.addActionListener(new ActionListener() {
                public void actionPerformed(ActionEvent e) {
