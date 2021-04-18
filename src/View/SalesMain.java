@@ -268,7 +268,7 @@ public class SalesMain {
 		lbl_sell.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				new Main();
+				new SellMain();
 				frame.dispose(); // 현재 Window창 종료
 			}
 

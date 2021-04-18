@@ -53,7 +53,7 @@ import java.awt.Component;
 import java.awt.BorderLayout;
 import javax.swing.JProgressBar;
 
-public class Main {
+public class SellMain {
 
 	private JFrame frame;
 	CardLayout cardLayout; // 카드레이아웃 선언
@@ -197,7 +197,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Main window = new Main();
+					SellMain window = new SellMain();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -206,7 +206,7 @@ public class Main {
 		});
 	}
 
-	public Main() {
+	public SellMain() {
 		initialize();
 		frame.setVisible(true);
 	}
@@ -712,7 +712,7 @@ public class Main {
 		lbl_sell.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				new Main();
+				new SellMain();
 				frame.dispose(); // 현재 Window창 종료
 			}
 
