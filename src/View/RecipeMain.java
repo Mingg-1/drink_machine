@@ -114,7 +114,7 @@ public class RecipeMain {
    private JTable tableRcpInlist;
    private JTextField RcpListBrdName;
    // ----------------------------------------------------레시피 끝
-
+   //힘내라햄힘힘ㅎ미매힘ㅁ
    // 라벨 이미지 변경쓰---------------------------------------------
    private JLabel lbl_sell, lbl_mtr, lbl_rcp, lbl_ord, lbl_sls;
    //////////////// 판매버튼///////////////////////////////////////
